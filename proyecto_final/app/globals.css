@@ -1,26 +1,49 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* Colores estrictamente necesarios */
+    --color-primary: #0ea5e9;          /* Cyan para los corchetes < > */
+    --color-bg-primary: #92c3ff;       /* Azul cielo (arriba) */
+    --color-bg-secondary: #5a91f2;     /* Azul medio */
+    --color-bg-dark: #2f56c7;          /* Azul profundo (abajo) */
+    
+    --color-text-primary: #ffffff;     /* Blanco para título */
+    --color-text-secondary: #e2e8f0;   /* Blanco roto para subtítulo */
+    
+    /* El fondo mágico */
+    --gradient-bg: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 45%, var(--color-bg-dark) 100%);
+    
+    /* Tipografía básica */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-size-xl: 1.25rem;
+    --font-size-5xl: 3rem;
+    
+    /* Espacios usados por tu título */
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-3xl: 4rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
+    color: var(--color-text-primary);
+    background: var(--gradient-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
+
+/* ========== LAYOUT ========== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 0 var(--spacing-lg);
+}
+
