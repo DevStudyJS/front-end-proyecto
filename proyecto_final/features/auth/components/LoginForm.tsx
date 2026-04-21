@@ -9,9 +9,9 @@ export interface PlayerData {
 }
 
 const PLAYERS_DB: Record<string, PlayerData> = {
-  'astro_dev': { username: 'astro_dev', avatar: 'https://placehold.co/400x400/0f172a/06b6d4?text=🚀', title: 'Explorador Estelar' },
-  'math_wizard': { username: 'math_wizard', avatar: 'https://placehold.co/400x400/0f172a/a855f7?text=🧙‍♂️', title: 'Mago Matemático' },
-  'dev_student': { username: 'dev_student', avatar: 'https://placehold.co/400x400/0f172a/22c55e?text=👨‍💻', title: 'Aprendiz Dev' }
+  'astro_dev': { username: 'astro_dev', avatar: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Avery', title: 'Explorador Estelar' },
+  'math_wizard': { username: 'math_wizard', avatar: 'https://api.dicebear.com/9.x/open-peeps/svg?seed=Ryker', title: 'Mago Matemático' },
+  'dev_student': { username: 'dev_student', avatar: 'https://api.dicebear.com/9.x/toon-head/svg?seed=Riley', title: 'Aprendiz Dev' }
 }
 
 interface Props {
@@ -35,7 +35,9 @@ export default function LoginForm({ onUsernameChange }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      <h1 className={styles.title}>DevStudy</h1>
+      <h1 className={styles.title}>Iniciar Sesión</h1>
+      <h2 className={styles.title2}>DevStudy</h2>
+      
       <p className={styles.subtitle}>Prepárate para el siguiente nivel 🎮</p>
 
       <div className={styles.fields}>
