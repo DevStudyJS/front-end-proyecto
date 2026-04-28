@@ -5,5 +5,6 @@ import Mapa from "./Mapa/mapa";
 export default function Home() {
   return (
     <Mapa />
-  );
-}
+
+  )
+  };
