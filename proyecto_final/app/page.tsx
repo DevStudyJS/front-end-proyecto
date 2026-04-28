@@ -4,5 +4,10 @@ import Mapa from "./Mapa/mapa";
 export default function Home() {
   return (
     <Mapa />
+import Login from "./(auth)/login/login"
+
+export default function Home() {
+  return (
+    <Login />
   );
 }
