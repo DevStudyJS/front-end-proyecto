@@ -1,19 +1,17 @@
 import styles from './Menu.module.css';
 
+
 export default function Menu() {
   return (
     <>
       <div className={styles.menu}>
         <h2>Menú</h2>
-        <a href="#">Inicio</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
+        <button className={styles['menu-btn']}>Mapa de islas</button>
+        <button className={styles['menu-btn']}>Mi Progreso</button>
+        <button className={styles['menu-btn']}>Ranking Global</button>
+        <button className={styles['menu-btn']}>Mi Avatar</button>
       </div>
 
-      <div className={styles.contenido}>
-        <h1>Contenido</h1>
-        <p>idk ...</p>
-      </div>
     </>
   );
 }
