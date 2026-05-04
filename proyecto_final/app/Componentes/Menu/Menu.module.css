@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+.menu {
+  position: fixed;      
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;       
+  background-color: #5f7db1;
+  color: white;
+  padding: 20px;
+}
+
+
+.menu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.menu a:hover {
+  background-color: #638cbe;
+}
+
+
+.contenido {
+  margin-left: 220px;   
+  padding: 20px;
+}
