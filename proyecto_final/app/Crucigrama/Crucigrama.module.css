@@ -1,0 +1,491 @@
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: "Arial Rounded MT Bold", Geneva, Arial, sans-serif;
+  color: #000040;
+  background-color: #ffffff;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #000080 0%, #0066cc 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.title {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin: 0.5rem 0 0;
+  opacity: 0.9;
+}
+
+.instructions {
+  background-color: #e8f4ff;
+  border-left: 4px solid #0066cc;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1100px) {
+  .mainContent {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* GRID STYLES */
+.gridContainer {
+  display: inline-block;
+  overflow-x: auto;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.grid {
+  border-collapse: collapse;
+  background-color: #000000;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.grid td {
+  width: 2rem;
+  height: 2rem;
+  padding: 1px;
+  border: 1px solid #000000;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  position: relative;
+  transition: background-color 0.15s;
+}
+
+.grid .blank {
+  background-color: #000000;
+  cursor: default;
+}
+
+.grid .cell {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.grid .cell:hover {
+  background-color: #e3f2fd;
+}
+
+.grid .cell.active {
+  background-color: #bbdefb;
+  outline: 2px solid #1976d2;
+  outline-offset: -2px;
+}
+
+.grid .cell.correct {
+  background-color: #c8e6c9;
+  animation: pulse 0.3s ease;
+}
+
+.grid .cell.incorrect {
+  background-color: #ffcdd2;
+  animation: shake 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.clueNumber {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: #000040;
+  pointer-events: none;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cellInput {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: #000040;
+  caret-color: #0066cc;
+}
+
+.cellInput::selection {
+  background: transparent;
+}
+
+/* CLUES STYLES */
+.cluesSection {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.cluesColumn {
+  background: white;
+  border: 1px solid #c0c0c0;
+  border-radius: 6px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cluesColumn h4 {
+  margin: 0 0 0.75rem;
+  color: #000080;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #0066cc;
+  padding-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cluesColumn h4::before {
+  content: "➗";
+}
+
+.cluesColumn:nth-child(2) h4::before {
+  content: "📐";
+}
+
+.clueList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.clueList li {
+  margin: 0.4rem 0;
+  line-height: 1.4;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.clueList li:hover {
+  background-color: #f0f7ff;
+  border-left-color: #0066cc;
+}
+
+.clueList li.active {
+  background-color: #e3f2fd;
+  border-left-color: #1976d2;
+  font-weight: 600;
+}
+
+.clueNum {
+  font-weight: bold;
+  color: #000080;
+  margin-right: 0.3rem;
+  background: #e8f4ff;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.clueText {
+  color: #000040;
+  display: inline;
+}
+
+.clueAnswer {
+  font-style: italic;
+  color: #666;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.button {
+  padding: 0.6rem 1.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 2px solid #6e6e6e;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #dddddd;
+  color: #000040;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.button:hover {
+  background-color: #c0c0c0;
+  border-color: #000040;
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button.primary {
+  background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+  color: white;
+  border-color: #003377;
+}
+
+.button.primary:hover {
+  background: linear-gradient(135deg, #0052a3 0%, #003377 100%);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.button.success {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  color: white;
+  border-color: #1e7e34;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* FEEDBACK MODAL */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: white;
+  border: 2px solid #000040;
+  border-radius: 10px;
+  padding: 1.5rem;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.modal h3 {
+  margin: 0 0 1rem;
+  color: #000080;
+  font-size: 1.4rem;
+}
+
+.modal p {
+  margin: 0.5rem 0;
+  color: #000040;
+  line-height: 1.5;
+}
+
+.modalScore {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #0066cc;
+  margin: 0.75rem 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.scoreMessage {
+  font-size: 1.1rem;
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.scoreMessage.excellent {
+  background: #d4edda;
+  color: #155724;
+}
+
+.scoreMessage.good {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.scoreMessage.improve {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.modalButtons {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* HINT BOX */
+.clueEntry {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #999;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.clueEntryLabel {
+  font-weight: bold;
+  color: #000080;
+  margin-right: 0.5rem;
+}
+
+.clueEntryText {
+  font-style: italic;
+  color: #000040;
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+/* PROGRESS BAR */
+.progressBar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #0066cc, #00cc99);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progressText {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .grid td {
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .clueNumber {
+    font-size: 0.5rem;
+    width: 14px;
+    height: 14px;
+  }
+  
+  .cellInput {
+    font-size: 0.95rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+  }
+}
+
+/* PRINT STYLES */
+@media print {
+  .controls, .modalOverlay {
+    display: none !important;
+  }
+  
+  .grid td {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+}
