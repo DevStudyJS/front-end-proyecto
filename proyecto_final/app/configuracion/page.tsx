@@ -1,6 +1,12 @@
-import AccountPage from 'components/configuration/accountPage.module.css';
+import Menu from "../components/menu/menu"
+import AccountPage from '../components/pagina-configuracion/AccountPage';
 
-export default function Page()
+export default function Configuracion()
 {
-    return <AccountPage/>;
+    return (
+        <div style={{ display: "flex" }}>
+            <Menu />
+            <AccountPage  />
+        </div>
+    );
 }
