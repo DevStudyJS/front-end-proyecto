@@ -1,56 +1,60 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './tienda.module.css';
 
-// Datos falsos para avanzar hoy
-const MOCK_ITEMS = [
-  { id: 1, name: 'Gorra Roja', price: 50, category: 'accesorios', img: '/assets/gorra.png' },
-  { id: 2, name: 'Lentes Pro', price: 30, category: 'accesorios', img: '/assets/lentes.png' },
-  { id: 3, name: 'Chamarra Azul', price: 100, category: 'blusas', img: '/assets/top1.png' },
-  { id: 4, name: 'Corgi Espacial', price: 500, category: 'mascota', img: '/assets/pet1.png' },
+// 1. Datos simulados de la ropa/skins (Hardcoded)
+const catalogoRopa = [
+    { id: 1, nombre: 'Traje de Héroe Rojo', precio: '150 Monedas', imgGrande: '/skins/heroe_rojo_full.png', imgMini: '/skins/heroe_rojo_icono.png' },
+    { id: 2, nombre: 'Armadura Avanzada', precio: '200 Monedas', imgGrande: '/skins/armadura_full.png', imgMini: '/skins/armadura_icono.png' },
+    { id: 3, nombre: 'Traje de Incógnito', precio: 'Free', imgGrande: '/skins/incognito_full.png', imgMini: '/skins/incognito_icono.png' },
+    { id: 4, nombre: 'Uniforme de Gala', precio: '100 Monedas', imgGrande: '/skins/gala_full.png', imgMini: '/skins/gala_icono.png' },
 ];
 
-export const Tienda = () => {
-  const [categoria, setCategoria] = useState('accesorios');
-  const [viewing, setViewing] = useState({
-    accesorios: '',
-    blusas: '',
-    mascota: ''
-  });
+export default function TiendaVisual() {
+    // 2. Estado para saber qué skin está seleccionada actualmente
+    // Empezamos mostrando la primera skin por defecto (catalogoRopa[0])
+    const [skinSeleccionada, setSkinSeleccionada] = useState(catalogoRopa[0]);
 
-  const filtrarItems = MOCK_ITEMS.filter(item => item.category === categoria);
+    return (
+        <div className={styles.tiendaWrapper}>
+            
+            {/* SECCIÓN SUPERIOR: El visualizador del monito */}
+            <section className={styles.previewSection}>
+                <div className={styles.characterContainer}>
+                    {/* Esta imagen cambia dinámicamente según el estado */}
+                    <img 
+                        src={skinSeleccionada.imgGrande} 
+                        alt={skinSeleccionada.nombre} 
+                        className={styles.characterImage}
+                    />
+                </div>
+                <div className={styles.characterInfo}>
+                    <h2>{skinSeleccionada.nombre}</h2>
+                    <span className={styles.precioTag}>{skinSeleccionada.precio}</span>
+                    <button className={styles.buyBtn}>Adquirir Aspecto</button>
+                </div>
+            </section>
 
-  return (
-    <div className={styles.container}>
-      {/* SECCIÓN AVATAR (PREVISUALIZACIÓN) */}
-      <div className={styles.avatarSection}>
-        <img src="/assets/base_body.png" className={styles.avatarLayer} alt="Cuerpo" />
-        {viewing.blusas && <img src={viewing.blusas} className={styles.avatarLayer} />}
-        {viewing.accesorios && <img src={viewing.accesorios} className={styles.avatarLayer} />}
-        {viewing.mascota && <img src={viewing.mascota} className={styles.avatarLayer} />}
-      </div>
+            <hr className={styles.divider} />
 
-      {/* SECCIÓN TIENDA */}
-      <div className={styles.storeSection}>
-        <div className={styles.tabs}>
-          <button onClick={() => setCategoria('accesorios')}>Accesorios</button>
-          <button onClick={() => setCategoria('blusas')}>Blusas</button>
-          <button onClick={() => setCategoria('mascota')}>Mascotas</button>
+            {/* SECCIÓN INFERIOR: El catálogo de ropa/conjuntos */}
+            <section className={styles.catalogSection}>
+                <h3>Conjuntos Disponibles</h3>
+                <div className={styles.gridRopa}>
+                    {catalogoRopa.map((prenda) => (
+                        <div 
+                            key={prenda.id} 
+                            /* Si es la prenda seleccionada, le añadimos una clase de "activo" */
+                            className={`${styles.itemCard} ${skinSeleccionada.id === prenda.id ? styles.activeItem : ''}`}
+                            /* POR QUÉ: Al hacer clic, actualizamos el estado con los datos de esta prenda */
+                            onClick={() => setSkinSeleccionada(prenda)}
+                        >
+                            <img src={prenda.imgMini} alt={prenda.nombre} className={styles.miniImg} />
+                            <p>{prenda.nombre}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
         </div>
-
-        <div className={styles.grid}>
-          {filtrarItems.map(item => (
-            <div 
-              key={item.id} 
-              className={styles.itemCard}
-              onClick={() => setViewing({...viewing, [item.category]: item.img})}
-            >
-              <img src={item.img} width={50} />
-              <p>{item.name}</p>
-              <span>💰 {item.price}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+}
