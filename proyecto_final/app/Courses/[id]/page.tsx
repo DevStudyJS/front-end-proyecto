@@ -6,8 +6,8 @@ import styles from './courses.module.css'
 const islandThemes: Record<number, string> = {
     1: 'themeAlgebra',      // ID de Álgebra
     2: 'themeTrigonometry', // ID de Trigonometría
-    3: 'themeCalculus',     // ID de Cálculo
-    4: 'themeGeometry',     // ID de Geometría
+    3: 'themeGeometry',     // ID de Geometría
+    4: 'themeCalculus',     // ID de Cálculo
 };
 
 export default async function PaginaCurso({ params }: { params: Promise<{ id: string }> }) {
