@@ -1,8 +1,9 @@
 .tiendaWrapper {
-    background-color: #1a1a1a; /* Fondo oscuro estilo juego */
-    color: white;
+    /* Mantenemos el mismo fondo azul degradado de tu mapa para que se sienta la misma app */
+    background: linear-gradient(180deg, #5db6ff 0%, #2a78d4 100%);
+    color: #0b2545; /* Azul muy oscuro para que los textos se lean perfectamente */
     min-height: 100vh;
-    padding: 30px;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,29 +15,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #252525;
-    border-radius: 20px;
-    padding: 20px;
+    /* Efecto Vidrio: Blanco semi-transparente */
+    background: rgba(255, 255, 255, 0.45); 
+    /* Esta línea difumina sutilmente lo que está detrás del cuadro */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    border-radius: 24px;
+    padding: 25px;
     width: 100%;
-    max-width: 500px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    margin-bottom: 25px;
+    max-width: 450px;
+    /* Sombra suave y azulada para dar profundidad sin verse sucia */
+    box-shadow: 0 10px 30px rgba(11, 37, 69, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    margin-bottom: 30px;
 }
 
 .characterContainer {
-    width: 200px;
-    height: 280px;
+    width: 100%;
+    height: 260px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, #444 0%, #111 100%); /* Efecto de estudio/podio */
-    border-radius: 15px;
+    /* Fondo degradado suave en tonos celestes */
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); 
+    border-radius: 18px;
     overflow: hidden;
-    border: 2px solid #555;
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .characterImage {
-    height: 90%; /* Ajusta el monito para que quepa bien */
+    height: 85%;
     object-fit: contain;
 }
 
@@ -48,34 +57,39 @@
 
 .characterInfo h2 {
     margin: 5px 0;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    color: #0b2545; /* Azul marino */
+    font-weight: 700;
 }
 
 .precioTag {
     display: inline-block;
-    background-color: #ffb703;
-    color: #000;
+    background-color: #fca311; /* Color naranja/oro para destacar las monedas */
+    color: white;
     font-weight: bold;
-    padding: 5px 15px;
+    padding: 6px 18px;
     border-radius: 20px;
     margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(252, 163, 17, 0.3);
 }
 
 .buyBtn {
     width: 100%;
-    background-color: #00b4d8;
+    background-color: #0077b6; /* Azul rey llamativo para el botón de acción */
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     font-weight: bold;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.3);
 }
 
 .buyBtn:hover {
-    background-color: #0096c7;
+    background-color: #03045e; /* Azul más oscuro al pasar el mouse */
+    transform: translateY(-2px);
 }
 
 .divider {
@@ -83,8 +97,8 @@
     max-width: 800px;
     border: 0;
     height: 1px;
-    background: #444;
-    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.4); /* Línea divisoria muy sutil */
+    margin: 25px 0;
 }
 
 /* --- SECCIÓN INFERIOR (CATÁLOGO) --- */
@@ -95,45 +109,54 @@
 
 .catalogSection h3 {
     margin-bottom: 15px;
-    color: #ccc;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
 }
 
 .gridRopa {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Se adapta al tamaño de pantalla */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 15px;
 }
 
 .itemCard {
-    background-color: #2a2a2a;
-    border: 2px solid #444;
-    border-radius: 15px;
+    /* Tarjetas inferiores también con efecto vidrio pero ligeramente más transparentes */
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 18px;
     padding: 15px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
 }
 
 .itemCard:hover {
-    border-color: #00b4d8;
-    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
 }
 
-/* Estilo especial para la tarjeta que está activa/seleccionada */
+/* Estilo especial para resaltar la ropa seleccionada */
 .activeItem {
-    border-color: #ffb703;
-    background-color: #332a15;
+    background: rgba(255, 255, 255, 0.85); /* Se vuelve casi blanca sólida */
+    border: 2px solid #0077b6; /* Borde azul rey */
+    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
 }
 
 .miniImg {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .itemCard p {
     margin: 0;
     font-size: 0.9rem;
-    color: #ddd;
+    font-weight: 600;
+    color: #0b2545;
 }
