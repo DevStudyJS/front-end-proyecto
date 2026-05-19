@@ -6,7 +6,12 @@ import Header from "./HeaderFondo/headerFondo"
 
 export default function Home() {
   return (
-    <Mapa />
+    <div style={{display: "flex"}}>
+      <Menu />
 
-  )
-  };
+      <div style={{ flex: 1, padding: "20px"}}>
+        <Mapa />
+      </div>
+    </div>
+  );
+}
