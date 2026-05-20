@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './NotFound.module.css';
+import styles from './not-found.module.css';
 
 
 export default function NotFound() {
