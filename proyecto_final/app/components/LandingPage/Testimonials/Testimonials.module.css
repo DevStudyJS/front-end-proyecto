@@ -1,0 +1,269 @@
+/* ===== Variables CSS ===== */
+:root {
+  --section-bg-start: #ffffff;
+  --section-bg-end: #faf5ff; /* purple-50 */
+  --text-dark: #111827;
+  --text-muted: #4b5563;
+  --text-dim: #6b7280;
+  --card-bg: #ffffff;
+  --card-border: #f3f4f6;
+  --card-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.15);
+  --card-shadow-hover: 0 20px 25px -5px rgba(168, 85, 247, 0.25);
+  --avatar-gradient: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+  --star-color: #facc15; /* yellow-400 */
+  --indicator-default: #d1d5db;
+  --indicator-active: #a855f7;
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --scroll-duration: 400ms;
+}
+
+/* ===== Section Base ===== */
+.section {
+  padding: 5rem 0;
+  background: linear-gradient(to bottom, var(--section-bg-start), var(--section-bg-end));
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ===== Header con Animación de Entrada ===== */
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: slideInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 48rem;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0;
+  animation: slideInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Carousel Container ===== */
+.carouselContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fade gradients laterales */
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(to right, var(--section-bg-start), transparent);
+}
+
+.fadeRight {
+  right: 0;
+  background: linear-gradient(to left, var(--section-bg-start), transparent);
+}
+
+/* Track de scroll horizontal */
+.track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 0.5rem 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* ===== Testimonial Card ===== */
+.card {
+  flex-shrink: 0;
+  width: 350px;
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition: 
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal);
+  cursor: pointer;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* ===== Avatar Section ===== */
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--avatar-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: 0 4px 6px -1px rgba(192, 132, 252, 0.3);
+  transition: transform var(--transition-normal);
+}
+
+.card:hover .avatar {
+  transform: scale(1.1);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.userName {
+  font-weight: 700;
+  color: var(--text-dark);
+  font-size: 1.1rem;
+}
+
+.userRole {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+/* ===== Stars Rating ===== */
+.stars {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.star {
+  color: var(--star-color);
+  font-size: 1.125rem;
+  animation: starPop 0.3s ease forwards;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Escalonamiento de estrellas */
+.star:nth-child(1) { animation-delay: 0.1s; }
+.star:nth-child(2) { animation-delay: 0.15s; }
+.star:nth-child(3) { animation-delay: 0.2s; }
+.star:nth-child(4) { animation-delay: 0.25s; }
+.star:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes starPop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== Testimonial Text ===== */
+.testimonialText {
+  color: var(--text-muted);
+  line-height: 1.625;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.testimonialText::before,
+.testimonialText::after {
+  content: '"';
+  color: var(--indicator-active);
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 0;
+  vertical-align: -0.3em;
+}
+
+.testimonialText::before {
+  margin-right: 0.25rem;
+}
+
+.testimonialText::after {
+  margin-left: 0.25rem;
+}
+
+/* ===== Navigation Indicators ===== */
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--indicator-default);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  padding: 0;
+}
+
+.indicator:hover {
+  background: var(--text-muted);
+  transform: scale(1.1);
+}
+
+.indicator.active {
+  background: var(--indicator-active);
+  width: 2rem;
+  border-radius: 1rem;
+}
+
+/* En Testimonials.module.css */
+.card.featured {
+  border: 2px solid #facc15;
+  box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.1), var(--card-shadow);
+  animation: featuredPulse 3s ease-in-out infinite;
+}
+
+@keyframes featuredPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.1), var(--card-shadow); }
+  50% { box-shadow: 0 0 0 8px rgba(250, 204, 21, 0.3), var(--card-shadow-hover); }
+}

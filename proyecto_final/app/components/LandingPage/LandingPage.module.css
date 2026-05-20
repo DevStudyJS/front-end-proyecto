@@ -1,0 +1,67 @@
+/* ===== Variables CSS ===== */
+:root {
+  --bg-page: #ffffff;
+  --text-dark: #111827;
+  --primary: #667eea;
+  --transition-normal: 300ms ease;
+}
+
+/* ===== Page Wrapper ===== */
+.page {
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  width: 100%;
+}
+
+/* ===== Loading State ===== */
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-page);
+}
+
+.loadingContent {
+  text-align: center;
+}
+
+.spinner {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 3px solid rgba(102, 126, 234, 0.2);
+  border-bottom-color: var(--primary);
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  margin-top: 1rem;
+  color: var(--text-dark);
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0;
+  animation: fadeIn 0.3s ease 0.2s forwards;
+}
+
+/* En LandingPage.module.css */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
