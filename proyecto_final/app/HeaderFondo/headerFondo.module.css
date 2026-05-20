@@ -1,21 +1,23 @@
 .headerContainer {
     text-align: center;
-    margin-bottom: var(--spacing-3xl);
+    margin-bottom: 4rem;
     /* padding-top: 8rem;  */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
 
 .title {
-    font-size: var(--font-size-5xl); 
+    /* ESTO HACE LA LETRA PRINCIPAL MUCHO MÁS GRANDE */
+    font-size: 2.5rem; 
     font-weight: 800;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 1rem;
     line-height: 1.2;
 }
 
 .description {
-    font-size: var(--font-size-xl);
+    /* ESTO HACE EL SUBTÍTULO MÁS GRANDE PARA QUE ESTÉ EN PROPORCIÓN */
+    font-size: 1rem;
     color: var(--color-text-secondary);
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }

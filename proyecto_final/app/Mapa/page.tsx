@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link'; // Importamos la herramienta de navegación de Next.js
 import styles from './mapa.module.css';
+import HeaderFondo from '../HeaderFondo/headerFondo';   
 
 // 1. DICCIONARIO VISUAL (Solo imágenes y estado de bloqueo)
 // Mapeamos el ID de la base de datos con su imagen correspondiente.
@@ -26,10 +27,7 @@ export default async function Mapa() {
 
     return (
         <div className={styles.mainWrapper}>
-            <header className={styles.header}>
-                <h1>Mapa de Aventuras</h1>
-                <p>Elige tu próxima isla para conquistar</p>
-            </header>
+            <HeaderFondo/>
 
             <main className={styles.mapGrid}>
                 {/* 3. RECORREMOS LA BASE DE DATOS EN LUGAR DEL ARREGLO ESTÁTICO */}
