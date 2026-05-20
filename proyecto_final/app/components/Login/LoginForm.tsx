@@ -4,6 +4,8 @@ import { signIn, getCurrentUser } from '@/lib/Auth'
 import type { Usuarios } from '@/lib/database.types'
 import styles from './LoginForm.module.css'
 import Link from 'next/link'
+import { lookupUser, isValidEmail } from '@/lib/userLookup'
+
 
 export interface PlayerData {
   username: string
@@ -33,50 +35,43 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // 🔍 Búsqueda en tiempo real + Fallback inmediato
+  // 🔍 Búsqueda en tiempo real (150ms para respuesta inmediata)
   useEffect(() => {
     if (!identifier.trim()) {
-      setPreviewPlayer(null)
-      onPreviewChange(null)
+    setPreviewPlayer(null)
+    onPreviewChange(null)
+    return
+  }
+
+  const timer = setTimeout(async () => {
+    const { user, error } = await lookupUser(identifier)
+
+    if (error) {
+      console.error('❌ Error en búsqueda:', error.message)
       return
     }
 
-    const timer = setTimeout(async () => {
-      const { data: { session } } = await import('@/lib/supabase').then(m => m.supabase.auth.getSession())
-      if (session) return
-
-      const { supabase } = await import('@/lib/supabase')
-      const { data, error } = await supabase
-        .from('usuarios')
-        .select('usuario, avatar, rol')
-        .or(`email.eq.${identifier},usuario.eq.${identifier}`)
-        .maybeSingle()
-
-      if (error) {
-        console.error('Error buscando usuario:', error)
-        return
+    if (user) {
+      // ✅ Usuario encontrado: cargar avatar real + rol
+      const player: PlayerData = {
+        username: user.usuario,
+        avatar: user.avatar || FALLBACK_AVATAR,
+        title: ROLE_TITLES[user.rol as keyof typeof ROLE_TITLES] || 'Explorador',
+        id_usuario: user.id_usuario
       }
-
-      if (data) {
-        const userRole = data.rol as Usuarios['rol']
-        const player: PlayerData = {
-          username: data.usuario,
-          avatar: data.avatar || FALLBACK_AVATAR,
-          title: ROLE_TITLES[userRole]
-        }
-        setPreviewPlayer(player)
-        onPreviewChange(player) // ✅ Envía datos al padre
-      } else {
-        // 🚨 USUARIO INVÁLIDO → Activa fallback inmediatamente
-        const fallbackPlayer: PlayerData = {
-          username: identifier.includes('@') ? identifier.split('@')[0] : identifier,
-          avatar: FALLBACK_AVATAR,
-          title: 'Nuevo Explorador'
-        }
-        setPreviewPlayer(fallbackPlayer)
-        onPreviewChange(fallbackPlayer) 
+      setPreviewPlayer(player)
+      onPreviewChange(player)
+    } else {
+      // 🚨 Usuario no existe: mostrar fallback NOOB
+      const fallbackPlayer: PlayerData = {
+        username: isValidEmail(identifier) ? identifier.split('@')[0] : identifier,
+        avatar: FALLBACK_AVATAR,
+        title: 'Nuevo Explorador'
       }
-    }, 300)
+      setPreviewPlayer(fallbackPlayer)
+      onPreviewChange(fallbackPlayer)
+    }
+  }, 150)
 
     return () => clearTimeout(timer)
   }, [identifier, onPreviewChange])
@@ -105,12 +100,13 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
       const { data, error: authError } = await signIn({ email: emailToLogin, password })
       if (authError || !data) throw authError || new Error('Credenciales incorrectas')
 
+      // ✅ Obtener perfil REAL post-login para actualizar valores de autenticación
       const { profile } = await getCurrentUser()
       if (!profile) throw new Error('Perfil no disponible')
 
       onLoginSuccess({
         username: profile.usuario,
-        avatar: profile.avatar || FALLBACK_AVATAR,
+        avatar: profile.avatar || FALLBACK_AVATAR, // Datos reales de la BD
         title: ROLE_TITLES[profile.rol],
         id_usuario: profile.id_usuario
       })
@@ -123,6 +119,13 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
+      <Link 
+            href="/" 
+            className={styles.modernLink}
+            onClick={() => setLoading(false)}
+          >
+            <b>↩ Inicio</b>
+          </Link>
       <h1 className={styles.title}>Iniciar Sesión</h1>
       <h2 className={styles.title2}>DevStudy</h2>
       <p className={styles.subtitle}>Prepárate para el siguiente nivel 🎮</p>
@@ -160,9 +163,10 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
         {loading ? '🚀 Conectando...' : 'Iniciar Sesión'}
       </button>
 
+
       <div className={styles.footer}>
         ¿No tienes cuenta?{' '}
-        <Link type="button" className={styles.link} href="/register">
+        <Link className={styles.link} href="/register">
           Regístrate
         </Link>
       </div>

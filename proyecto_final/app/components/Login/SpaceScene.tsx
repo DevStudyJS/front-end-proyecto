@@ -6,6 +6,8 @@ import styles from './SpaceScene.module.css'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
+const FALLBACK_AVATAR = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+
 interface Props {
   showAvatar: boolean
   avatarData: PlayerData | null
@@ -17,11 +19,10 @@ export default function SpaceScene({ showAvatar, avatarData, isLoading = false }
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (planetRef.current) {
-      // ✅ e.nativeEvent es el PointerEvent real del DOM, donde offsetX/Y están garantizados
-      planetRef.current.rotation.y = e.nativeEvent.offsetX * 0.001;
-      planetRef.current.rotation.x = e.nativeEvent.offsetY * 0.001;
+      planetRef.current.rotation.y = e.nativeEvent.offsetX * 0.001
+      planetRef.current.rotation.x = e.nativeEvent.offsetY * 0.001
     }
-  };
+  }
 
   return (
     <div className={styles.canvasWrapper}>
@@ -63,13 +64,12 @@ export default function SpaceScene({ showAvatar, avatarData, isLoading = false }
               alt={avatarData.username}
               className={styles.avatarImage}
               onError={(e) => {
-                e.currentTarget.src = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+                // ✅ Fallback si la imagen falla al cargar
+                e.currentTarget.src = FALLBACK_AVATAR
               }}
             />
             <div className={styles.avatarTitle}>{avatarData.title}</div>
-            {avatarData.username && (
-              <div className={styles.usernameBadge}>@{avatarData.username}</div>
-            )}
+            {/* ❌ Badge @usuario ELIMINADO según requerimiento */}
           </div>
         ) : (
           <div className={styles.hintText}>
