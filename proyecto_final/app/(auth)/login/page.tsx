@@ -17,7 +17,7 @@ export default function LoginPage() {
   const handleLoginSuccess = (player: PlayerData) => {
     setIsLoggingIn(true)
     setTimeout(() => {
-      router.push('/dashboard')
+      router.push('/index')
       router.refresh()
     }, 800)
   }

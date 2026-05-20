@@ -15,7 +15,7 @@ export default function NotFound() {
           La página que buscas no existe, fue movida o simplemente se tomó un descanso.
           ¡No te preocupes, volvamos a casa!
         </p>
-        <Link href="/" className={styles.button}>
+        <Link href="/index" className={styles.button}>
           ✨ Volver al inicio
         </Link>
       </div>
