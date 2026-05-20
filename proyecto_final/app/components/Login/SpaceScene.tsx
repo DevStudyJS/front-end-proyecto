@@ -9,14 +9,27 @@ import * as THREE from 'three'
 interface Props {
   showAvatar: boolean
   avatarData: PlayerData | null
+  isLoading?: boolean
 }
 
-export default function SpaceScene({ showAvatar, avatarData }: Props) {
+export default function SpaceScene({ showAvatar, avatarData, isLoading = false }: Props) {
   const planetRef = useRef<THREE.Mesh>(null)
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (planetRef.current) {
+      // ✅ e.nativeEvent es el PointerEvent real del DOM, donde offsetX/Y están garantizados
+      planetRef.current.rotation.y = e.nativeEvent.offsetX * 0.001;
+      planetRef.current.rotation.x = e.nativeEvent.offsetY * 0.001;
+    }
+  };
 
   return (
     <div className={styles.canvasWrapper}>
-      <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }} dpr={[1, 2]}>
+      <Canvas 
+        camera={{ position: [0, 0, 4.5], fov: 45 }} 
+        dpr={[1, 2]}
+        onPointerMove={handlePointerMove}
+      >
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
         <pointLight position={[-5, -5, 5]} intensity={0.8} color="#8b5cf6" />
@@ -26,10 +39,10 @@ export default function SpaceScene({ showAvatar, avatarData }: Props) {
         <mesh ref={planetRef} scale={1.6}>
           <sphereGeometry args={[1, 64, 64]} />
           <MeshDistortMaterial
-            color="#3b82f6"
+            color={isLoading ? "#10b981" : "#3b82f6"}
             attach="material"
-            distort={0.35}
-            speed={1.5}
+            distort={isLoading ? 0.5 : 0.35}
+            speed={isLoading ? 3 : 1.5}
             roughness={0.2}
             metalness={0.6}
           />
@@ -37,15 +50,30 @@ export default function SpaceScene({ showAvatar, avatarData }: Props) {
       </Canvas>
 
       <div className={`${styles.avatarOverlay} ${showAvatar ? styles.visible : ''}`}>
-        {avatarData && (
+        {isLoading ? (
+          <div className={styles.loadingAvatar}>
+            <div className={styles.spinner3D} />
+            <span>Conectando...</span>
+          </div>
+        ) : avatarData ? (
           <div className={styles.avatarWrapper}>
             <div className={styles.glow} />
             <img
               src={avatarData.avatar}
               alt={avatarData.username}
               className={styles.avatarImage}
+              onError={(e) => {
+                e.currentTarget.src = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+              }}
             />
             <div className={styles.avatarTitle}>{avatarData.title}</div>
+            {avatarData.username && (
+              <div className={styles.usernameBadge}>@{avatarData.username}</div>
+            )}
+          </div>
+        ) : (
+          <div className={styles.hintText}>
+            👆 Escribe tu usuario o correo para ver tu avatar
           </div>
         )}
       </div>
