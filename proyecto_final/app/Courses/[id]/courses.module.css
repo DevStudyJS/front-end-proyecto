@@ -1,0 +1,69 @@
+/* ========================================= */
+/* ESTRUCTURA Y CRISTAL ESMERILADO           */
+/* ========================================= */
+
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    transition: background 0.5s ease; /* Transición suave si cambian de tema */
+}
+
+/* Esta caja de cristal hace que el texto siempre se lea perfecto */
+.contentCard {
+    background: rgba(15, 23, 42, 0.6); /* Azul muy oscuro semitransparente */
+    backdrop-filter: blur(12px); /* Efecto de cristal */
+    -webkit-backdrop-filter: blur(12px);
+    padding: 3rem 4rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #ffffff;
+    max-width: 800px;
+}
+
+.title {
+    font-size: var(--font-size-5xl, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+    font-size: var(--font-size-xl, 1.25rem);
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+/* ========================================= */
+/* TEMAS DE LAS ISLAS (Extraídos de tus imágenes) */
+/* ========================================= */
+
+/* ÁLGEBRA: Montañas y Océano (Azul cielo a Verde naturaleza) */
+.themeAlgebra {
+    background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+}
+
+/* TRIGONOMETRÍA: Playa y Palmeras (Turquesa a Arena/Sol) */
+.themeTrigonometry {
+    background: linear-gradient(135deg, #2dd4bf 0%, #fbbf24 100%);
+}
+
+/* GEOMETRÍA: Ciudad Futurista Neón (Azul Noche a Magenta a Cyan) */
+.themeGeometry {
+    background: linear-gradient(135deg, #1e1b4b 0%, #be185d 50%, #06b6d4 100%);
+}
+
+/* CÁLCULO: Cristales Místicos (Púrpura oscuro a Violeta brillante) */
+.themeCalculus {
+    background: linear-gradient(135deg, #2e1065 0%, #7e22ce 50%, #d946ef 100%);
+}
+
+/* TEMA POR DEFECTO: (Si crean una isla nueva) */
+.themeDefault {
+    background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+}

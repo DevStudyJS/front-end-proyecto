@@ -1,0 +1,72 @@
+{
+  "features": {
+    "title": "Características que te Encantarán",
+    "subtitle": "DevStudy combina gamificación con pedagogía efectiva para hacer del aprendizaje una experiencia memorable",
+    "cards": [
+      { "icon": "map-2", "title": "Islas Interactivas", "desc": "Explora los mundos temáticos de cada área del conocimiento. Cada isla ofrece desafíos únicos y progresivos." },
+      { "icon": "fire", "title": "Sistema de Rachas", "desc": "Mantén tu racha diaria de estudio y desbloquea recompensas especiales. ¡La constancia es la clave del éxito!" },
+      { "icon": "trophy", "title": "Sistema de Ranking", "desc": "Compite con otros estudiantes y escala posiciones en el leaderboard. Demuestra que eres el mejor." },
+      { "icon": "user-smile", "title": "Avatares Personalizables", "desc": "Crea tu propio avatar único y desbloquea accesorios especiales conforme avanzas en tu aprendizaje." },
+      { "icon": "line-chart", "title": "Seguimiento de Progreso", "desc": "Visualiza tu avance en tiempo real con estadísticas detalladas y gráficas de rendimiento por unidad." },
+      { "icon": "book-2", "title": "Simuladores de Exámen", "desc": "Podrás realizar varios simuladores del exámen para poner a prueba tu aprendizaje adquirido." }
+    ]
+  },
+  "steps": {
+    "title": "¿Cómo funciona?",
+    "subtitle": "Solo 4 pasos para comenzar tu aventura de aprendizaje",
+    "items": [
+      { "step": "01", "title": "Crea tu Cuenta", "desc": "Regístrate en segundos y personaliza tu avatar." },
+      { "step": "02", "title": "Explora las Islas", "desc": "Navega en el mapa interactivo y elige una isla a conquistar." },
+      { "step": "03", "title": "Completa Lecciones", "desc": "Responde, juega, descubre con las actividades diseñadas para ti." },
+      { "step": "04", "title": "Gana Recompensas", "desc": "Acumula puntos, desbloquea insignias y sube en el ranking." }
+    ]
+  },
+  "testimonials": {
+    "title": "Historias de Éxito",
+    "subtitle": "Nuestros estudiantes han alcanzado sus metas con DevStudy",
+    "reviews": [
+      { "name": "Ambar Martínez", 
+        "image": "",
+        "role": "Estudiante de CCH Naucalpan", 
+        "stars": 5, 
+        "text": "La explicación y ejercicios que se realizan son básicos y otros algo complejos, sirve mucho para retroalimentar temas básicos." 
+      },
+      { "name": "Alice Gil", 
+        "image": "",
+        "role": "Estudiante de CCH Naucalpan", 
+        "stars": 5, 
+        "text": "El modo en el que se aplica es muy divertido y hace que el estudio no sea aburrido."
+      },
+      { "name": "Javier Villanueva", 
+        "image": "",
+        "role": "Estudiante de CECyT 2", 
+        "stars": 5, 
+        "text": "Gracias al sitio se logró el objetivo de quedar en mi opción favorita." 
+      },
+      { "name": "Jatziri Gaytan", 
+        "image": "",
+        "role": "Estudiante de CCH Naucalpan",
+        "stars": 5, 
+        "text": "El apoyo y consejos brindados en la plataforma fueron de gran utilidad."
+      },
+      { "name": "Wendy Hernández", 
+        "image": "",
+        "role": "Estudiante de CCH Naucalpan",
+        "stars": 5, 
+        "text": "Lo logramos gracias al apoyo de la plataforma." 
+      }
+    ]
+  },
+  "cta": {
+    "title": "Empecemos con el juego",
+    "subtitle": "Únete a miles de estudiantes que ya están preparándose con DevStudy. Tu aventura educativa comienza ahora.",
+    "btnPrimary": "Comenzar Gratis",
+    "btnSecondary": "Más Información",
+    "badges": ["100% Gratis", "Exámenes Incluidos", "Acceso Ilimitado"]
+  },
+  "hero": {
+    "courses": "1",
+    "lessons": "1",
+    "students": "8"
+  }
+}
