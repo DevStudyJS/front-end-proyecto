@@ -66,6 +66,16 @@ export default function SignupForm() {
       setTimeout(() => router.push('/login'), 2500)
     } catch (err: any) {
       setError(err.message || 'QUEST FALLIDA. INTENTA DE NUEVO.')
+      // En el catch de signUp:
+      console.error('🔍 Debug completo del error:', {
+        name: (error as any)?.name,
+        status: (error as any)?.status,
+        code: (error as any)?.code,
+        message: (error as any)?.message,
+        headers: (error as any)?.headers,
+        isDev: process.env.NODE_ENV,
+        timestamp: new Date().toISOString()
+      });
     } finally {
       setLoading(false)
     }

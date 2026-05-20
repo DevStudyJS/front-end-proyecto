@@ -8,80 +8,26 @@ import { Usuarios, SignUpFormData, SignInFormData, UpdateProfileData, AuthResult
  */
 export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> => {
   try {
-    const normalizedEmail = data.email.trim().toLowerCase();
-    const normalizedUsuario = data.usuario.trim();
-
-    // 1️⃣ Crear usuario en auth.users
     const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: normalizedEmail,
+      email: data.email,
       password: data.password,
       options: {
         data: {
-          usuario: normalizedUsuario,
-          escuela: data.escuela.trim(),
+          usuario: data.usuario,
+          escuela: data.escuela,
           rol: data.rol || 'estudiante',
         },
-        emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/dashboard`,
+        emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/index`,
       },
     });
 
-    if (authError) {
-      if (authError.message?.includes('already registered')) {
-        return { data: null, error: new Error('Este correo ya está registrado.') };
-      }
-      if (authError.message?.includes('invalid')) {
-        return { data: null, error: new Error('Formato de correo inválido.') };
-      }
-      throw authError;
-    }
+    if (authError) throw authError;
+    if (!authData.user) throw new Error('No se pudo crear la cuenta de autenticación.');
 
-    if (!authData.user) {
-      throw new Error('No se pudo crear la cuenta.');
-    }
-    
-    const { data: profile, error: profileCheck } = await supabase
-      .from('usuarios')
-      .select('id_usuario')
-      .eq('id_usuario', authData.user.id)
-      .maybeSingle();
-
-    if (profileCheck && profileCheck.code !== 'PGRST116') {
-      console.warn('⚠️ Advertencia al verificar perfil:', profileCheck.message);
-      // No bloqueamos el flujo: el trigger puede tardar unos ms en ejecutarse
-    }
 
     return { data: authData.user, error: null };
-
-  } catch (error: any) {
-    console.error('[Auth] signUp error:', error);
-    
-    if (error?.message?.includes('Database error')) {
-      return { 
-        data: null, 
-        error: new Error('Error interno al guardar tu perfil. Intenta de nuevo.') 
-      };
-    }
-    if (error?.message?.includes('duplicate')) {
-      return { 
-        data: null, 
-        error: new Error('Este usuario o correo ya está en uso.') 
-      };
-    }
-
-    if (error?.status === 429 || error?.message?.includes('rate limit')) {
-      return { 
-        data: null, 
-        error: new Error('⏱️ Demasiados intentos. Espera 1 minuto y prueba de nuevo.') 
-      };
-    }
-
-    if (error?.message?.includes('email rate limit')) {
-      return { 
-        data: null, 
-        error: new Error('📧 Este correo ha recibido muchos registros recientes. Usa otro email o espera unos minutos.') 
-      };
-    }
-    
+  } catch (error) {
+    console.error('[Auth] Error en signUp:', error);
     return { data: null, error: error as Error };
   }
 };
