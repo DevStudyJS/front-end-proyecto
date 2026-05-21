@@ -1,69 +1,138 @@
 /* ========================================= */
-/* ESTRUCTURA Y CRISTAL ESMERILADO           */
+/* ESTRUCTURA PRINCIPAL (Flexbox)            */
 /* ========================================= */
 
 .pageWrapper {
+    display: flex; /* Divide la pantalla de izquierda a derecha */
+    min-height: 100vh;
+    width: 100vw;
+    transition: background 0.5s ease;
+}
+
+/* ========================================= */
+/* EL PANEL LATERAL (1/5 de la pantalla)     */
+/* ========================================= */
+
+.sidebar {
+    width: 20%; /* Exactamente un quinto de la pantalla */
+    min-width: 280px; /* Evita que se aplaste mucho en pantallas pequeñas */
+    background: rgba(15, 23, 42, 0.65); 
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3); /* Sombra hacia la derecha */
+    z-index: 10;
+}
+
+.sidebarTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #06b6d4; /* Un cyan llamativo para contrastar */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+}
+
+.sidebarText {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #f1f5f9;
+    opacity: 0.9;
+}
+
+.actionArea {
+    margin-top: auto; /* Empuja esto hasta abajo del panel */
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statusBadge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* ========================================= */
+/* CONTENIDO PRINCIPAL (4/5 restantes)       */
+/* ========================================= */
+
+.mainContent {
+    flex: 1; /* Toma todo el espacio que sobró del panel lateral */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
-    transition: background 0.5s ease; /* Transición suave si cambian de tema */
+    padding-top: 6rem; /* Empuja el título hacia arriba como un Header */
 }
 
-/* Esta caja de cristal hace que el texto siempre se lea perfecto */
-.contentCard {
-    background: rgba(15, 23, 42, 0.6); /* Azul muy oscuro semitransparente */
-    backdrop-filter: blur(12px); /* Efecto de cristal */
-    -webkit-backdrop-filter: blur(12px);
-    padding: 3rem 4rem;
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.headerArea {
     text-align: center;
-    color: #ffffff;
-    max-width: 800px;
+    width: 100%;
 }
 
 .title {
-    font-size: var(--font-size-5xl, 3.5rem);
-    font-weight: 800;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-size: var(--font-size-5xl, 5rem);
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    /* Dejamos una sombra fija y bonita aquí, ya no la animamos */
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    letter-spacing: -2px;
+    
+    /* LA ANIMACIÓN (La subí a 4 segundos para que sea más relajante) */
+    animation: levitar 4s ease-in-out infinite;
+    
+    /* EL TRUCO DE MAGIA: Le avisa al navegador que esto se va a mover */
+    will-change: transform;
+}
+
+/* LOS FOTOGRAMAS OPTIMIZADOS */
+@keyframes levitar {
+    0% {
+        /* Usar translate3d en lugar de translateY fuerza el uso de la Tarjeta Gráfica */
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(0, -12px, 0); 
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 .subtitle {
-    font-size: var(--font-size-xl, 1.25rem);
-    color: #e2e8f0;
+    font-size: var(--font-size-xl, 1.5rem);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
 /* ========================================= */
-/* TEMAS DE LAS ISLAS (Extraídos de tus imágenes) */
+/* TEMAS DE LAS ISLAS                        */
 /* ========================================= */
 
-/* ÁLGEBRA: Montañas y Océano (Azul cielo a Verde naturaleza) */
 .themeAlgebra {
     background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 }
 
-/* TRIGONOMETRÍA: Playa y Palmeras (Turquesa a Arena/Sol) */
 .themeTrigonometry {
     background: linear-gradient(135deg, #2dd4bf 0%, #fbbf24 100%);
 }
 
-/* GEOMETRÍA: Ciudad Futurista Neón (Azul Noche a Magenta a Cyan) */
 .themeGeometry {
     background: linear-gradient(135deg, #1e1b4b 0%, #be185d 50%, #06b6d4 100%);
 }
 
-/* CÁLCULO: Cristales Místicos (Púrpura oscuro a Violeta brillante) */
 .themeCalculus {
     background: linear-gradient(135deg, #2e1065 0%, #7e22ce 50%, #d946ef 100%);
 }
 
-/* TEMA POR DEFECTO: (Si crean una isla nueva) */
 .themeDefault {
     background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
 }
