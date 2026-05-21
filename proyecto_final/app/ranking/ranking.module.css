@@ -1,0 +1,310 @@
+/* RankingGlobal.module.css */
+
+.rankingContainer {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #ffffff; /* Floating UI Base */
+    min-height: 100vh;
+}
+
+/* ================= BANNER Y CONTROLES ================= */
+
+.headerBanner {
+    background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    color: white;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(234, 179, 8, 0.25);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.bannerIcon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.bannerTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bannerSubtitle {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+    opacity: 0.95;
+}
+
+.toggleWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.toggleContainer {
+    display: flex;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    gap: 0.5rem;
+}
+
+.toggleBtn {
+    border: none;
+    background: transparent;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.5rem;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.toggleBtn:hover {
+    color: #1e293b;
+}
+
+.activeBtn {
+    background: #ffffff;
+    color: #eab308;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= EL PODIO ================= */
+
+.podiumWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Alinea los escalones por abajo */
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.podiumStep {
+    width: 180px;
+    border-radius: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 3.5rem 1rem 1.5rem 1rem; /* Espacio arriba para el avatar */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+.podiumStep:hover {
+    transform: translateY(-5px);
+}
+
+/* Alturas y colores exactos de los escalones */
+.step2 { height: 200px; background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%); }
+.step1 { height: 260px; background: linear-gradient(180deg, #fde047 0%, #eab308 100%); }
+.step3 { height: 170px; background: linear-gradient(180deg, #d97706 0%, #b45309 100%); }
+
+.crown {
+    position: absolute;
+    top: -75px;
+    color: #facc15;
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    animation: flotarCorona 3s ease-in-out infinite;
+}
+
+@keyframes flotarCorona {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.avatarWrapper {
+    position: absolute;
+    top: -45px; /* Saca el avatar hacia arriba de la caja */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatarImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.positionBadge {
+    position: absolute;
+    bottom: -5px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    background: white;
+    color: #475569;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.podiumName {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+}
+
+.podiumPoints {
+    font-size: 1.75rem;
+    font-weight: 900;
+    margin: 0 0 1rem 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.podiumBadges {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* ================= TABLA DE POSICIONES ================= */
+
+.tableCard {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Estilo Floating UI */
+}
+
+/* Grid para simular una tabla limpia */
+.tableHeader, .tableRow {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px 150px;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tableHeader {
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tableRow {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s;
+    border-radius: 0.75rem;
+}
+
+.tableRow:last-child {
+    border-bottom: none;
+}
+
+.tableRow:hover {
+    background-color: #f8fafc;
+}
+
+/* El resaltado azul para el usuario actual */
+.currentUserRow {
+    background-color: #eff6ff;
+    border-bottom: none;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.1);
+    transform: scale(1.01);
+    margin: 0.5rem 0;
+    padding: 1.25rem 1rem; /* Añade un poco de padding lateral para el resaltado */
+}
+
+.currentUserRow:hover {
+    background-color: #e0f2fe;
+}
+
+/* Columnas */
+.colPos { text-align: center; }
+.colName { display: flex; align-items: center; gap: 1rem; }
+.colPoints { font-weight: 800; color: #1e293b; text-align: center; }
+.colBadges { display: flex; gap: 0.5rem; justify-content: flex-start; }
+
+.posNumber {
+    font-weight: 800;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.listAvatar {
+    width: 40px;
+    height: 40px;
+    background: #3b82f6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.nameContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.studentName {
+    font-weight: 600;
+    color: #334155;
+    font-size: 1rem;
+}
+
+.youBadge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.listBadgeIcon {
+    font-size: 1.25rem;
+    color: #eab308; /* Color dorado por defecto */
+}
+
+/* Color específico para algunas insignias de la lista */
+.ri-book-read-fill { color: #3b82f6; }
+.ri-compasses-2-fill { color: #ec4899; }
+.ri-fire-fill { color: #f97316; }
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .rankingContainer { padding: 1rem; }
+    .podiumWrapper { gap: 0.5rem; align-items: center; flex-direction: column; }
+    .podiumStep { width: 100%; height: auto !important; padding: 1.5rem; flex-direction: row; justify-content: flex-start; text-align: left; }
+    .avatarWrapper { position: relative; top: 0; margin-right: 1rem; }
+    .crown { display: none; }
+    .tableHeader { display: none; /* Esconde headers en móvil */ }
+    .tableRow { grid-template-columns: 40px 1fr auto; padding: 1rem; }
+    .colBadges { display: none; /* Esconde insignias en móvil para ahorrar espacio */ }
+}
