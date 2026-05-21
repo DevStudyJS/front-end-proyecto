@@ -1,56 +1,51 @@
-
+/* ========================================
+   NOTFOUND.MODULE.CSS - VERSIÓN RESPONSIVE OPTIMIZADA
+   Proyecto: DevStudy | Enfoque: Mobile-First + Accesibilidad
+   ======================================== */
 
 .container {
-  min-height: 100vh;
+  /* ✅ Usar dvh para evitar problemas con la barra de URL en móviles */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #e0f2fe 0%, #ffedd5 50%, #dbeafe 100%);
-  padding: 2rem;
+  /* ✅ Padding fluido con clamp() para escalado suave */
+  padding: clamp(1rem, 5vw, 2rem);
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
-
 
 .content {
   text-align: center;
   max-width: 600px;
-  padding: 2.5rem;
+  width: 100%; /* ✅ Evita desbordamiento en pantallas muy pequeñas */
+  /* ✅ Padding fluido */
+  padding: clamp(1.5rem, 4vw, 2.5rem);
   background: rgba(255, 255, 255, 0.85);
   border-radius: 1.5rem;
   box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
   animation: slideUp 0.6s ease-out forwards;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.6);
+  /* ✅ Margen lateral para evitar que toque los bordes en móvil */
+  margin: 0 1rem;
 }
 
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
+/* ... [mantén tus keyframes slideUp y bounce sin cambios] ... */
 
 .emoji {
-  font-size: 4rem;
+  /* ✅ Tamaño fluido para emoji */
+  font-size: clamp(2.5rem, 8vw, 4rem);
   margin-bottom: 0.5rem;
   animation: bounce 2s infinite;
+  /* ✅ Evita que el emoji se seleccione accidentalmente en touch */
+  user-select: none;
+  -webkit-user-select: none;
 }
-
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
 
 .code {
-  font-size: 6rem;
+  /* ✅ Tipografía fluida con clamp() */
+  font-size: clamp(3.5rem, 12vw, 6rem);
   font-weight: 800;
   margin: 0;
   background: linear-gradient(135deg, #3b82f6, #f97316);
@@ -62,17 +57,16 @@
   text-shadow: 0 2px 10px rgba(59, 130, 246, 0.1);
 }
 
-
 .title {
-  font-size: 1.75rem;
+  /* ✅ Tamaño relativo con fallback */
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-weight: 700;
   color: #1e3a5f;
   margin: 0.75rem 0 1rem;
 }
 
-
 .description {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 3.5vw, 1.1rem);
   color: #475a7a;
   margin-bottom: 2rem;
   line-height: 1.7;
@@ -80,7 +74,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .button {
   display: inline-flex;
@@ -98,8 +91,12 @@
   box-shadow: 0 6px 20px -4px rgba(249, 115, 22, 0.3);
   border: none;
   cursor: pointer;
+  /* ✅ Touch target mínimo para accesibilidad móvil (WCAG) */
+  min-height: 44px;
+  min-width: 44px;
+  /* ✅ Evita zoom accidental en iOS al hacer tap */
+  touch-action: manipulation;
 }
-
 
 .button:hover {
   transform: translateY(-3px);
@@ -107,53 +104,97 @@
   background: linear-gradient(135deg, #3b82f6, #f97316);
 }
 
-
 .button:active {
   transform: translateY(-1px);
 }
 
+/* ========================================
+   MEDIA QUERIES - RESPONSIVE PROGRESIVO
+   ======================================== */
 
-/* Responsive */
+/* 📱 Tablet y abajo (≤768px) */
 @media (max-width: 768px) {
-  .code {
-    font-size: 4.5rem;
-  }
-  .title {
-    font-size: 1.5rem;
-  }
-  .description {
-    font-size: 1rem;
-  }
   .content {
-    padding: 2rem 1.5rem;
+    margin: 0 0.75rem;
+    border-radius: 1.25rem;
+  }
+  
+  .description {
+    padding: 0 0.5rem;
   }
 }
 
-
+/* 📱 Móvil pequeño (≤480px) */
 @media (max-width: 480px) {
-  .code {
-    font-size: 3.5rem;
+  .content {
+    padding: 1.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 1rem;
   }
-  .emoji {
+  
+  .button {
+    /* ✅ Botón full-width en móviles para mejor ergonomía */
+    width: 100%;
+    max-width: 320px;
+    padding: 0.9rem 1rem;
+  }
+}
+
+/* 📱 Móvil muy pequeño (≤320px) - iPhone SE, etc. */
+@media (max-width: 320px) {
+  .code {
     font-size: 3rem;
   }
-  .button {
-    width: 100%;
-    padding: 0.9rem;
+  
+  .emoji {
+    font-size: 2.5rem;
+  }
+  
+  .title {
+    font-size: 1.1rem;
+  }
+  
+  .content {
+    padding: 1rem 0.75rem;
   }
 }
 
+/* 🌐 Pantallas grandes (≥1024px) - Ajustes opcionales */
+@media (min-width: 1024px) {
+  .content {
+    max-width: 650px;
+    padding: 3rem;
+  }
+}
 
-/* Accesibilidad: modo reducido de movimiento */
+/* ♿ Accesibilidad: modo reducido de movimiento */
 @media (prefers-reduced-motion: reduce) {
   .content,
   .emoji,
   .button {
     animation: none !important;
     transition: none !important;
+    transform: none !important;
   }
 }
 
-
-
-
+/* 🌓 Modo oscuro (opcional, si tu proyecto lo soporta) */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  }
+  
+  .content {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+  }
+  
+  .title {
+    color: #f1f5f9;
+  }
+  
+  .description {
+    color: #cbd5e1;
+  }
+}

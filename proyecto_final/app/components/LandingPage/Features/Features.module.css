@@ -11,34 +11,37 @@
 
 /* ===== Section Base ===== */
 .section {
-  padding: 5rem 0;
+  padding: clamp(3rem, 8vw, 5rem) 0;
   background-color: var(--features-bg);
   width: 100%;
 }
 
+/* ===== Contenedor Principal ===== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 clamp(1rem, 4vw, 1.5rem);
+  width: 100%;
 }
 
 /* ===== Header con Animación de Entrada ===== */
 .header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
 }
 
 .title {
-  font-size: 3rem;
+  font-size: clamp(1.75rem, 6vw, 3rem);
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 1rem;
   opacity: 0;
   animation: slideInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 3.5vw, 1.125rem);
   color: var(--text-muted);
   max-width: 48rem;
   margin: 0 auto;
@@ -52,18 +55,18 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Grid Desktop Only ===== */
+/* ===== Grid - Mobile First ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
 
 /* ===== Feature Card ===== */
 .card {
   background: var(--features-bg);
   border-radius: 1rem;
-  padding: 2rem;
+  padding: clamp(1.5rem, 4vw, 2rem);
   border: 2px solid var(--border-default);
   box-shadow: var(--shadow-sm);
   transition: 
@@ -75,6 +78,8 @@
   opacity: 0;
   animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: transform, opacity;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 .card:hover {
@@ -85,20 +90,21 @@
 
 /* ===== Icon Wrapper ===== */
 .iconWrapper {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: clamp(2.5rem, 6vw, 3.5rem);
+  height: clamp(2.5rem, 6vw, 3.5rem);
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
   color: white;
-  font-size: 1.75rem;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
   transition: transform var(--transition-normal);
   background: var(--icon-gradient, linear-gradient(135deg, #6366f1, #8b5cf6));
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .iconWrapper::before {
@@ -117,22 +123,220 @@
 
 /* ===== Typography ===== */
 .cardTitle {
-  font-size: 1.25rem;
+  font-size: clamp(1.125rem, 3.5vw, 1.25rem);
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 0.75rem;
+  line-height: 1.3;
 }
 
 .cardDescription {
   color: var(--text-muted);
   line-height: 1.625;
-  font-size: 1rem;
+  font-size: clamp(0.9375rem, 3vw, 1rem);
 }
 
+/* ===== Empty State ===== */
 .emptyState {
   text-align: center;
   color: var(--text-muted);
   grid-column: 1 / -1;
-  padding: 2rem;
-  font-size: 1rem;
+  padding: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(0.875rem, 3vw, 1rem);
+}
+
+/* ===== Escalonamiento de animaciones con :nth-child ===== */
+.card:nth-child(1) { animation-delay: 0.2s; }
+.card:nth-child(2) { animation-delay: 0.35s; }
+.card:nth-child(3) { animation-delay: 0.5s; }
+.card:nth-child(4) { animation-delay: 0.65s; }
+.card:nth-child(5) { animation-delay: 0.8s; }
+.card:nth-child(6) { animation-delay: 0.95s; }
+
+/* ===== Media Queries - Tablet ≤768px ===== */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .card {
+    text-align: center;
+  }
+  
+  .iconWrapper {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ===== Media Queries - Mobile ≤480px ===== */
+@media (max-width: 480px) {
+  .section {
+    padding: 2.5rem 0;
+  }
+  
+  .header {
+    margin-bottom: 2.5rem;
+  }
+  
+  .title {
+    margin-bottom: 0.75rem;
+  }
+  
+  .subtitle {
+    padding: 0 0.5rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 0.875rem;
+  }
+  
+  .iconWrapper {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.625rem;
+  }
+  
+  .cardTitle {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cardDescription {
+    font-size: 0.9375rem;
+  }
+}
+
+/* ===== Media Queries - Mobile pequeño ≤320px ===== */
+@media (max-width: 320px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9375rem;
+    padding: 0 0.25rem;
+  }
+  
+  .card {
+    padding: 1.25rem 1rem;
+  }
+  
+  .iconWrapper {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .cardTitle {
+    font-size: 1rem;
+  }
+  
+  .cardDescription {
+    font-size: 0.875rem;
+  }
+  
+  .emptyState {
+    font-size: 0.875rem;
+    padding: 1.25rem;
+  }
+}
+
+/* ===== Media Queries - Desktop ≥1024px ===== */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .card {
+    text-align: left;
+  }
+  
+  .iconWrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* ===== Media Queries - Desktop grande ≥1440px ===== */
+@media (min-width: 1440px) {
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .title {
+    font-size: 3.25rem;
+  }
+}
+
+/* ===== Accesibilidad - Modo reducido de movimiento ===== */
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .subtitle,
+  .card,
+  .iconWrapper,
+  .iconWrapper::before {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .card:hover {
+    transform: none;
+  }
+  
+  .card:hover .iconWrapper {
+    transform: none;
+  }
+}
+
+/* ===== Soporte para dispositivos táctiles - Desactivar hover en touch ===== */
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-default);
+  }
+  
+  .card:hover .iconWrapper {
+    transform: none;
+  }
+  
+  .card:hover .iconWrapper::before {
+    left: -100%;
+  }
+}
+
+/* ===== Modo oscuro opcional ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --features-bg: #0f172a;
+    --text-dark: #f1f5f9;
+    --text-muted: #cbd5e1;
+    --border-default: #334155;
+  }
+  
+  .card {
+    background: var(--features-bg);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+  
+  .card:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  }
 }

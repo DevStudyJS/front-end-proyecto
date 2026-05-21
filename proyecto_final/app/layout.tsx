@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DevStudy",
   description: "Plataforma de gamificación educativa",
+  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
