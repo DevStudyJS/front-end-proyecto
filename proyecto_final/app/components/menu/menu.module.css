@@ -16,24 +16,27 @@ body {
   padding: 20px;
 }
 
-.menu-btn
+.menu-btn 
 {
   background-color: #f5f5f5;
   border: 2px solid #5f7db1;
-  color: #5f7db1;
   border-radius: 12px;
   padding: 12px;
   font-size: 16px;
   font-weight: bold;
+  color: #5f7db1;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 10px;
+  display: block;
+  text-align: left;
 }
 
-.menu-btn:hover
+.menu-btn:hover 
 {
-  background-color: #ffe066;
-  border-color: #ffcc00;
+  background-color: #e6f0ff;
+  border-color: #3a6edc;
+  color: #333;
   transform: scale(1.05);
 }
 
@@ -42,6 +45,46 @@ body {
   border-radius: 50%;
   margin-bottom: 20px;
   border: 2px solid #5f7db1
+}
+
+/* sección actual */
+.menu-btn.active 
+{
+  background-color: #3a6edc; /* azul fuerte */
+  border-color: #1f4bb8;
+  color: #fff; /* letras blancas */
+}
+
+/* Botón racha activa */
+.menu-btn.streak 
+{
+  background-color: #ff7043; /* naranja */
+  border-color: #d84315;
+  color: #fff;
+}
+
+.menu-btn.streak:hover {
+  background-color: #ff5722;
+  border-color: #bf360c;
+}
+
+/* Avatar */
+.avatar {
+  border-radius: 50%;
+  border: 3px solid #5f7db1;
+  margin-bottom: 15px;
+}
+
+/* Puntos totales */
+.points-box {
+  background-color: #ffe066;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
 }
 /*
 .menu a {

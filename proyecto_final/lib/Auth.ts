@@ -3,7 +3,7 @@ import { supabase } from './supabase';
 import { Usuarios, SignUpFormData, SignInFormData, UpdateProfileData, AuthResult } from './database.types';
 
 /**
- * 📝 Registro de nuevo usuario.
+ * Registro de nuevo usuario.
  * Crea la cuenta en Supabase Auth. El trigger en la BD se encarga de `public.usuarios`.
  */
 export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> => {
@@ -19,7 +19,6 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
       avatar: data.avatar?.substring(0, 80)
     });
 
-    // 🔐 1️⃣ Crear usuario en auth.users de Supabase
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: normalizedEmail,
       password: data.password,
@@ -36,8 +35,7 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
 
     if (authError) {
       console.error('[Auth] auth.signUp error:', authError);
-      
-      // 🎮 Mensajes gamificados para errores comunes
+
       if (authError.message?.includes('already registered')) {
         return { data: null, error: new Error('⚠️ Este correo ya tiene un personaje registrado.') };
       }
@@ -54,142 +52,28 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
       throw new Error('No se pudo crear la cuenta de autenticación.');
     }
 
-    console.log('[Auth] ✅ Usuario creado en auth.users:', authData.user.id);
-
-    // 🎮 2️⃣ CREAR PERFIL EXPLÍCITO en public.usuarios (SIN TRIGGERS)
-    // Valores iniciales gamificados para DevStudy
-    const perfilInicial: Partial<Usuarios> = {
-      id_usuario: authData.user.id,
-      usuario: normalizedUsuario,
-      email: normalizedEmail,
-      avatar: data.avatar || 'https://api.dicebear.com/9.x/pixel-art/svg?seed=default',
-      escuela: normalizedEscuela,
-      rol: data.rol || 'estudiante',
-    };
-
-    // 🔄 Intentar insertar con manejo de errores específico
-    const { data: perfilCreado, error: insertError } = await supabase
-      .from('usuarios')
-      .insert(perfilInicial)
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('[Auth] ❌ Error insertando perfil en public.usuarios:', {
-        code: insertError.code,
-        message: insertError.message,
-        hint: insertError.hint,
-        details: insertError.details,
+    // ✅ Aquí logueamos el usuario recibido
+    console.log('[Auth] Usuario recibido de Supabase:', 
+      {
+        id: authData.user.id,
+        email: authData.user.email,
+        metadata: authData.user.user_metadata,
+        createdAt: authData.user.created_at
       });
 
-      // 🎮 Manejo de errores con mensajes amigables
-      if (insertError.code === '23505') { // unique_violation
-        // Verificar qué campo duplicó
-        if (insertError.message?.includes('usuarios_usuario_key')) {
-          return { 
-            data: null, 
-            error: new Error('⚠️ El nombre de usuario "' + normalizedUsuario + '" ya está en uso. ¡Elige otro!') 
-          };
-        }
-        if (insertError.message?.includes('usuarios_email_key')) {
-          return { 
-            data: null, 
-            error: new Error('⚠️ Este correo ya tiene una cuenta registrada.') 
-          };
-        }
-        if (insertError.message?.includes('usuarios_pkey')) {
-          // El usuario ya existe en auth pero el perfil falló - intentar recuperar
-          console.warn('[Auth] ⚠️ Perfil duplicado, intentando recuperar existente...');
-          const { data: existing, error: fetchError } = await supabase
-            .from('usuarios')
-            .select('*')
-            .eq('id_usuario', authData.user.id)
-            .maybeSingle();
-            
-          if (fetchError || !existing) {
-            return { 
-              data: null, 
-              error: new Error('⚠️ Conflicto de datos. Intenta de nuevo o contacta soporte.') 
-            };
-          }
-          // Perfil recuperado exitosamente
-          return { data: authData.user, error: null };
-        }
-      }
+    console.log('[Auth] ✅ Usuario creado en auth.users:', authData.user.id);
 
-      // Error no manejado - rollback opcional (eliminar usuario de auth si falla perfil)
-      console.warn('[Auth] 🔄 Intentando rollback de auth.user por fallo en perfil...');
-      // Nota: No eliminamos el user de auth para no complicar, pero podrías hacerlo:
-      // await supabase.auth.admin.deleteUser(authData.user.id);
-      
-      return { 
-        data: null, 
-        error: new Error('❌ No se pudo guardar tu perfil. Verifica tu conexión e intenta de nuevo.') 
-      };
-    }
-
-    console.log('[Auth] ✅ Perfil creado exitosamente en public.usuarios:', {
-      id: perfilCreado?.id_usuario,
-      usuario: perfilCreado?.usuario,
-      puntos_iniciales: perfilCreado?.puntos,
-      racha: perfilCreado?.racha_dias
-    });
-
-    // 🎉 3️⃣ Registrar evento de bienvenida para analytics/gamificación
-    // (Opcional - si tienes tabla de logs o eventos)
-    /*
-    await supabase.from('user_events').insert({
-      id_usuario: authData.user.id,
-      event_type: 'welcome_registration',
-      metadata: { 
-        rol: data.rol, 
-        escuela: normalizedEscuela,
-        bonus_points: 50 
-      }
-    });
-    */
-
+    // 🚫 No insertamos en public.usuarios porque el trigger lo hace automáticamente
     return { data: authData.user, error: null };
 
   } catch (error: any) {
-    console.error('[Auth] ❌ Error crítico en signUp:', {
-      name: error?.name,
-      message: error?.message,
-      code: error?.code,
-      status: error?.status,
-      hint: error?.hint,
-      details: error?.details,
-      isDev: process.env.NODE_ENV,
-      timestamp: new Date().toISOString()
-    });
-    
-    // 🎮 Mensajes de error gamificados y útiles
-    if (error?.message?.includes('Database error') || error?.code?.includes('53')) {
-      return { 
-        data: null, 
-        error: new Error('🌐 Error de conexión con la base de datos. Intenta en unos segundos.') 
-      };
-    }
-    if (error?.message?.includes('duplicate') || error?.code === '23505') {
-      return { 
-        data: null, 
-        error: new Error('⚠️ Este usuario o correo ya está registrado. ¡Prueba con otro!') 
-      };
-    }
-    if (error?.message?.includes('policy') || error?.code === '42501') {
-      return { 
-        data: null, 
-        error: new Error('🔒 Permiso denegado. Contacta al administrador si el problema persiste.') 
-      };
-    }
-    
+    console.error('[Auth] ❌ Error crítico en signUp:', error);
     return { data: null, error: error instanceof Error ? error : new Error('Quest fallida. Intenta de nuevo.') };
   }
 };
 
 /**
  * 🔑 Inicio de sesión.
- * Autentica y actualiza `last_date` para tracking de actividad.
  */
 export const signIn = async (data: SignInFormData): Promise<AuthResult<Session>> => {
   try {
@@ -201,7 +85,6 @@ export const signIn = async (data: SignInFormData): Promise<AuthResult<Session>>
     if (authError) throw authError;
     if (!authData.session) throw new Error('No se pudo iniciar sesión.');
 
-    // Actualizar última actividad en la tabla `usuarios`
     await supabase
       .from('usuarios')
       .update({ last_date: new Date().toISOString() })
@@ -245,7 +128,6 @@ export const getCurrentUser = async (): Promise<{
       .eq('id_usuario', session.user.id)
       .single();
 
-    // PGRST116 = No rows returned (perfil no existe, manejado por trigger)
     if (profileError && profileError.code !== 'PGRST116') {
       throw profileError;
     }
@@ -259,13 +141,12 @@ export const getCurrentUser = async (): Promise<{
 
 /**
  * 🔄 Suscribirse a cambios de autenticación en tiempo real.
- * Útil para mantener el estado global sincronizado sin recargar.
  */
 export const onAuthStateChange = (
   callback: (event: string, session: Session | null) => void
 ) => {
   const { data: { subscription } } = supabase.auth.onAuthStateChange(callback);
-  return subscription; // Llama .unsubscribe() al desmontar componente
+  return subscription;
 };
 
 /**
@@ -292,7 +173,7 @@ export const updateUserProfile = async (
 };
 
 /**
- * 🔒 Verificar sesión activa (helper para componentes/middleware).
+ * 🔒 Verificar sesión activa.
  */
 export const isAuthenticated = async (): Promise<boolean> => {
   const { data: { session } } = await supabase.auth.getSession();

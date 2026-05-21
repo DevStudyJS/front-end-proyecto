@@ -3,7 +3,7 @@
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; /*stretch*/
     padding: 40px;
     background-color: #f9fafb;
 }
@@ -17,7 +17,8 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     color: #1e3a8a; 
-
+    min-height: 100vh; /*cubrir toda la pantalla*/
+    margin-top: 20px; /*espacio debajo del menu*/
 }
 
 .form
@@ -40,7 +41,7 @@
     border-radius: 6px;
     color: #111827;
 }
-
+/*
 .saveBtn
 {
     margin-top: 20px;
@@ -56,3 +57,64 @@
 {
     background-color: #638cbe;
 }
+
+*/
+.sidebar 
+{
+  width: 220px;
+  background-color: #f3f4f6; /* gris claro */
+  padding: 20px;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebarBtn 
+{
+  display: block;
+  padding: 12px;
+  color: #1e3a8a; /* azul */
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.sidebarBtn:hover 
+{
+  background-color: #e0e7ff; /* azul claro */
+}
+
+.btn 
+{
+  display: block;
+  padding: 10px;
+  background-color: #5f7db1; /* azul */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover 
+{
+  background-color: #638cbe; /* azul más claro */
+}
+
+.avatarBox 
+{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.avatar 
+{
+  border-radius: 50%;   /* ✅ redondo */
+  border: 2px solid #5f7db1; /* ✅ contorno azul */
+}
+
