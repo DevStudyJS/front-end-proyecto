@@ -14,7 +14,7 @@ export interface PlayerData {
   id_usuario?: string
 }
 
-const FALLBACK_AVATAR = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+const FALLBACK_AVATAR = 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png'
 
 const ROLE_TITLES: Record<Usuarios['rol'], string> = {
   estudiante: 'Aprendiz Dev',

@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { Center } from '@react-three/drei'
 
 // 🎨 Constantes de avatar
-const FALLBACK_AVATAR = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+const FALLBACK_AVATAR = 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png'
 const AVATAR_BASE_URL = 'https://api.dicebear.com/9.x/pixel-art/svg?seed='
 
 // 🎮 Mapeo retro de roles (estética 8-bit)
@@ -65,7 +65,7 @@ export default function SignupForm() {
       // ✅ Generar URL válida del avatar (CORREGIDO: "&" en vez de "?")
       const avatarFinal = usuarioLimpio 
         ? `${AVATAR_BASE_URL}${encodeURIComponent(usuarioLimpio)}&backgroundColor=${['b6e3f4','fbcfe8','bbf7d0','fde68a','c7d2fe'][usuarioLimpio.length % 5]}&scale=90`
-        : ''
+        : 'https://api.dicebear.com/9.x/pixel-art/svg?seed=default';
 
       console.log('📤 Enviando registro:', {
         usuario: usuarioLimpio,
