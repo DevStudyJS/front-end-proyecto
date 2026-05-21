@@ -1,494 +1,628 @@
-/* app/courses/[id]/lessons/lessons.module.css */
 
-/* ========================================= */
-/* ESTRUCTURA PRINCIPAL                      */
-/* ========================================= */
-
-.pageWrapper {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-  padding-bottom: 4rem;
+:root {
+  /* Gradiente principal de la página (mismo que el hero) */
+  --gradient-bg: linear-gradient(135deg, #4facfe 0%, #667eea 30%, #7c5cbf 70%, #a78bfa 100%);
+  
+  /* Colores principales */
+  --primary: #7c5cbf;
+  --primary-light: #a78bfa;
+  --primary-dark: #5b3d99;
+  
+  /* Acento naranja (mismo que "Comenzar Aventura") */
+  --accent: #e67e22;
+  --accent-light: #f59e0b;
+  --accent-dark: #d35400;
+  --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #e67e22 100%);
+  
+  /* Teal del hero */
+  --teal: #4ecdc4;
+  --teal-light: #7eddd6;
+  --teal-dark: #38b2ab;
+  
+  /* Gradientes secundarios */
+  --gradient-teal-purple: linear-gradient(135deg, #4facfe 0%, #667eea 50%, #7c5cbf 100%);
+  --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #e67e22 100%);
+  --gradient-teal: linear-gradient(135deg, #4ecdc4 0%, #44b09e 100%);
+  --gradient-purple: linear-gradient(135deg, #7c5cbf 0%, #6c63ff 100%);
+  --gradient-blue: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  
+  /* Fondos y cards */
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-bg-subtle: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  
+  /* Texto */
+  --dark: #2d3436;
+  --gray: #636e72;
+  --light-gray: #b2bec3;
+  --light: #f8f9fa;
+  
+  /* Sombras */
+  --shadow: 0 10px 30px rgba(124, 92, 191, 0.15);
+  --shadow-strong: 0 20px 40px rgba(124, 92, 191, 0.25);
+  --shadow-accent: 0 10px 30px rgba(245, 158, 11, 0.3);
+  
+  --radius: 20px;
+  --radius-sm: 14px;
 }
 
-.progressBar {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.pageWrapper {
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Formas decorativas flotantes (como en el hero) */
+.pageWrapper::before {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  z-index: 1000;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
   overflow: hidden;
 }
 
-.progressFill {
-  height: 100%;
-  background: linear-gradient(90deg, #06b6d4, #10b981, #fbbf24);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-  transition: width 0.5s ease;
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+/* Hexágono decorativo */
+.pageWrapper::after {
+  content: '⬡';
+  position: fixed;
+  top: 10%;
+  right: 5%;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.08);
+  animation: floatShape 8s ease-in-out infinite;
+  z-index: 0;
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.progressText {
-  position: absolute;
-  right: 20px;
-  top: 12px;
-  color: white;
-  font-weight: bold;
-  font-size: 0.85rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+@keyframes floatShape {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(15deg); }
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 280px 1fr 320px;
-  gap: 2rem;
-  max-width: 1600px;
-  margin: 4rem auto 0;
-  padding: 0 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* ========================================= */
-/* PANEL DE ESTADÍSTICAS (IZQUIERDA)         */
-/* ========================================= */
-
-.statsPanel {
-  position: sticky;
-  top: 2rem;
-  height: fit-content;
-}
-
-.playerCard {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.avatar {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.playerName {
-  color: #06b6d4;
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-}
-
-.xpBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-weight: bold;
-  color: #1e1b4b;
-  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
-}
-
-.xpIcon {
-  font-size: 1.2rem;
-}
-
-/* LOGROS */
-
-.achievementsSection {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.sectionTitle {
-  color: #fbbf24;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.achievementsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-
-.achievement {
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  padding: 0.5rem;
-  font-size: 0.7rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: help;
-}
-
-.achievement.unlocked {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(16, 185, 129, 0.3));
-  border: 2px solid #06b6d4;
-  color: white;
-}
-
-.achievement.locked {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.3);
-  filter: grayscale(1);
-}
-
-.achievementIcon {
-  font-size: 1.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.achievementName {
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.backButton {
-  display: block;
-  text-align: center;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.backButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateX(-5px);
-}
-
-/* ========================================= */
-/* CONTENIDO PRINCIPAL (CENTRO)              */
-/* ========================================= */
-
-.mainContent {
-  min-height: 80vh;
-}
-
+/* ===== HEADER ===== */
 .header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 40px;
+  padding: 50px 30px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border-radius: var(--radius);
+  border: 2px solid var(--glass-border);
+  box-shadow: var(--shadow-strong);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .title {
   font-size: 3rem;
   font-weight: 900;
   color: white;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  background: linear-gradient(135deg, #06b6d4, #10b981);
+  margin-bottom: 15px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.5px;
+}
+
+.title span {
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .subtitle {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
 }
 
-/* QUESTS */
-
-.questList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+/* ===== GRID PRINCIPAL ===== */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 260px 1fr 280px;
+  gap: 24px;
+  align-items: start;
 }
 
-.questCard {
-  background: rgba(255, 255, 255, 0.05);
+@media (max-width: 1200px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== NAVEGACIÓN LATERAL ===== */
+.navPanel {
+  position: sticky;
+  top: 20px;
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.navTitle {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f2f6;
+}
+
+.navList {
+  list-style: none;
+}
+
+.navItem {
+  margin-bottom: 6px;
+}
+
+.navLink {
+  display: block;
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--dark);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.navLink:hover {
+  background: var(--gradient-teal-purple);
+  color: white;
+  transform: translateX(6px);
+  border-left-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(124, 92, 191, 0.3);
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.contentArea {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow-strong);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.section {
+  margin-bottom: 48px;
+  scroll-margin-top: 20px;
+}
+
+.sectionTitle {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 4px solid;
+  border-image: var(--gradient-teal-purple) 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--dark);
+}
+
+.subsection {
+  margin-bottom: 32px;
+  padding: 28px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+  border-radius: var(--radius-sm);
+  border-left: 6px solid var(--primary-light);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
 }
 
-.questCard::before {
+.subsection:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 20px rgba(124, 92, 191, 0.12);
+}
+
+.subsection h3 {
+  font-size: 1.35rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subsection h4 {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin: 24px 0 12px 0;
+  font-weight: 700;
+}
+
+.contentText {
+  font-size: 1.05rem;
+  color: var(--gray);
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.contentText strong {
+  color: var(--dark);
+}
+
+/* ===== CAJAS ESPECIALES ===== */
+.formulaBox {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+  border: 2px solid var(--primary-light);
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(124, 92, 191, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.formulaBox::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #06b6d4, #10b981);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  background: var(--gradient-teal-purple);
 }
 
-.questCard:hover:not(.locked) {
-  transform: translateY(-5px);
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+.exampleBox {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+  border-left: 6px solid var(--teal);
+  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.15);
 }
 
-.questCard:hover:not(.locked)::before {
-  transform: scaleX(1);
-}
-
-.questCard.completed {
-  border-color: rgba(16, 185, 129, 0.5);
-  background: rgba(16, 185, 129, 0.1);
-}
-
-.questCard.locked {
-  opacity: 0.6;
-  filter: grayscale(0.5);
-}
-
-.questCard.bossQuest {
-  border: 3px solid #fbbf24;
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
-}
-
-.questCard.bossQuest::before {
-  background: linear-gradient(90deg, #fbbf24, #f59e0b);
-}
-
-.questHeader {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.questNumber {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #06b6d4, #10b981);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 1.5rem;
-  color: white;
-  flex-shrink: 0;
-  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-}
-
-.questCard.completed .questNumber {
-  background: linear-gradient(135deg, #10b981, #059669);
-}
-
-.questCard.bossQuest .questNumber {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
-  50% { box-shadow: 0 0 0 20px rgba(251, 191, 36, 0); }
-}
-
-.questInfo {
-  flex: 1;
-}
-
-.questTitle {
-  color: white;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.questDesc {
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
-}
-
-.questReward {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.xpValue {
+.exampleBox strong {
+  color: #2e7d32;
   display: block;
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #fbbf24;
-  text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  margin-bottom: 12px;
+  font-size: 1.15rem;
 }
 
-.questType {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 0.5rem;
-}
-
-.startButton {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #06b6d4, #10b981);
+.importantBox {
+  background: var(--gradient-purple);
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+  border-left: 6px solid var(--accent);
   color: white;
-  text-decoration: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-  border: none;
-  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(124, 92, 191, 0.3);
 }
 
-.startButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.6);
+.importantBox strong {
+  color: var(--accent-light);
+  display: block;
+  margin-bottom: 12px;
+  font-size: 1.15rem;
 }
 
-.questCard.completed .startButton {
-  background: linear-gradient(135deg, #10b981, #059669);
+.importantBox ul {
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.lockedOverlay {
+.importantBox li {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===== GRID DE 2 COLUMNAS ===== */
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.infoCard {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 2px solid #f1f2f6;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.infoCard::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(15, 23, 42, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.1rem;
+  height: 4px;
+  background: var(--gradient-teal-purple);
 }
 
-/* ========================================= */
-/* PANEL DERECHO - REFERENCIAS               */
-/* ========================================= */
+.infoCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  box-shadow: 0 8px 25px rgba(124, 92, 191, 0.15);
+}
 
+.infoCard h4 {
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-size: 1.15rem;
+}
+
+/* ===== TABLAS ===== */
+.tableContainer {
+  overflow-x: auto;
+  margin: 24px 0;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table th {
+  background: var(--gradient-purple);
+  color: white;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f2f6;
+  color: var(--gray);
+}
+
+.table tr:hover {
+  background: #f8f9ff;
+}
+
+.table tr:nth-child(even) {
+  background: #fafbff;
+}
+
+/* ===== LISTAS ===== */
+.contentText ul,
+.contentText ol {
+  margin: 16px 0 16px 32px;
+}
+
+.contentText li {
+  margin-bottom: 8px;
+  color: var(--gray);
+}
+
+/* ===== KA TEX ===== */
+.katex-display {
+  margin: 20px 0 !important;
+  font-size: 1.25rem !important;
+  padding: 16px;
+  background: #f8f9ff;
+  border-radius: 8px;
+}
+
+.katex {
+  font-size: 1.1em !important;
+}
+
+/* ===== PANEL DERECHO - TIPS ===== */
 .sidePanel {
   position: sticky;
-  top: 2rem;
-  height: fit-content;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.quickReference {
-  background: rgba(255, 255, 255, 0.05);
+.tipCard {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 2px solid;
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2rem;
-  margin-bottom: 2rem;
 }
 
-.sideTitle {
-  color: #fbbf24;
-  font-size: 1.3rem;
+.tipCard.purple {
+  border-color: var(--primary-light);
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+}
+
+.tipCard.orange {
+  border-color: var(--accent-light);
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+}
+
+.tipCard.teal {
+  border-color: var(--teal-light);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+}
+
+.tipTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tipCard.purple .tipTitle { color: var(--primary); }
+.tipCard.orange .tipTitle { color: var(--accent-dark); }
+.tipCard.teal .tipTitle { color: var(--teal-dark); }
+
+.tipContent {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--gray);
+}
+
+/* ===== BADGES ===== */
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 50px;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  margin: 4px;
 }
 
-.formulaCard {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-left: 4px solid #06b6d4;
+.badge-purple {
+  background: var(--primary);
+  color: white;
 }
 
-.formulaCard h4 {
-  color: #06b6d4;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+.badge-orange {
+  background: var(--accent);
+  color: white;
 }
 
-.formulaCard :global(.katex-display) {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
+.badge-teal {
+  background: var(--teal);
+  color: white;
 }
 
-.tipBox {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2));
-  border: 2px solid rgba(6, 182, 212, 0.3);
-  border-radius: 20px;
-  padding: 2rem;
+/* ===== RESUMEN FINAL ===== */
+.resumenSection {
+  margin-top: 40px;
+  padding: 40px;
+  background: var(--gradient-teal-purple);
+  border-radius: var(--radius);
+  color: white;
+  box-shadow: var(--shadow-strong);
+  position: relative;
+  overflow: hidden;
 }
 
-.tipBox h4 {
-  color: #06b6d4;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+.resumenSection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-.tipBox p {
+.resumenGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.resumenCard {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 24px;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.resumenCard:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-4px);
+}
+
+.resumenCard h3 {
+  margin-bottom: 12px;
+  font-size: 1.15rem;
+}
+
+.resumenCard ul {
+  margin-left: 20px;
+  line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
-  font-size: 1rem;
 }
 
-/* ========================================= */
-/* RESPONSIVE                                */
-/* ========================================= */
-
-@media (max-width: 1200px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-  
-  .statsPanel,
-  .sidePanel {
-    position: static;
-  }
+.resumenCard li {
+  color: rgba(255, 255, 255, 0.9);
 }
 
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .questHeader {
-    flex-direction: column;
-  }
-  
-  .questReward {
-    text-align: left;
-  }
-  
   .title {
     font-size: 2rem;
   }
   
-  .achievementsGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .contentArea {
+    padding: 24px;
   }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .grid2, .resumenGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .subsection {
+    padding: 20px;
+  }
+}
+
+/* ===== SCROLLBAR PERSONALIZADA ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-teal-purple);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-orange);
 }
