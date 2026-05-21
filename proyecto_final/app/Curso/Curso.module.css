@@ -1,0 +1,494 @@
+/* app/courses/[id]/lessons/lessons.module.css */
+
+/* ========================================= */
+/* ESTRUCTURA PRINCIPAL                      */
+/* ========================================= */
+
+.pageWrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  padding-bottom: 4rem;
+}
+
+.progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #06b6d4, #10b981, #fbbf24);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.progressText {
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 4rem auto 0;
+  padding: 0 2rem;
+}
+
+/* ========================================= */
+/* PANEL DE ESTADÍSTICAS (IZQUIERDA)         */
+/* ========================================= */
+
+.statsPanel {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.playerCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.avatar {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.playerName {
+  color: #06b6d4;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.xpBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  color: #1e1b4b;
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+}
+
+.xpIcon {
+  font-size: 1.2rem;
+}
+
+/* LOGROS */
+
+.achievementsSection {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  color: #fbbf24;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.achievement {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: help;
+}
+
+.achievement.unlocked {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(16, 185, 129, 0.3));
+  border: 2px solid #06b6d4;
+  color: white;
+}
+
+.achievement.locked {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  filter: grayscale(1);
+}
+
+.achievementIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.achievementName {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.backButton {
+  display: block;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+}
+
+/* ========================================= */
+/* CONTENIDO PRINCIPAL (CENTRO)              */
+/* ========================================= */
+
+.mainContent {
+  min-height: 80vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #06b6d4, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+}
+
+/* QUESTS */
+
+.questList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.questCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.questCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #06b6d4, #10b981);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.questCard:hover:not(.locked) {
+  transform: translateY(-5px);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.questCard:hover:not(.locked)::before {
+  transform: scaleX(1);
+}
+
+.questCard.completed {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.questCard.locked {
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+
+.questCard.bossQuest {
+  border: 3px solid #fbbf24;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+}
+
+.questCard.bossQuest::before {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+.questHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.questNumber {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06b6d4, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
+.questCard.completed .questNumber {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.questCard.bossQuest .questNumber {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+  50% { box-shadow: 0 0 0 20px rgba(251, 191, 36, 0); }
+}
+
+.questInfo {
+  flex: 1;
+}
+
+.questTitle {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.questDesc {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.questReward {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.xpValue {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fbbf24;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+.questType {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.5rem;
+}
+
+.startButton {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #06b6d4, #10b981);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.startButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.6);
+}
+
+.questCard.completed .startButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.lockedOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+/* ========================================= */
+/* PANEL DERECHO - REFERENCIAS               */
+/* ========================================= */
+
+.sidePanel {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.quickReference {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.sideTitle {
+  color: #fbbf24;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.formulaCard {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #06b6d4;
+}
+
+.formulaCard h4 {
+  color: #06b6d4;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.formulaCard :global(.katex-display) {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.tipBox {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2));
+  border: 2px solid rgba(6, 182, 212, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.tipBox h4 {
+  color: #06b6d4;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.tipBox p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* ========================================= */
+/* RESPONSIVE                                */
+/* ========================================= */
+
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  .statsPanel,
+  .sidePanel {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .questHeader {
+    flex-direction: column;
+  }
+  
+  .questReward {
+    text-align: left;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .achievementsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
