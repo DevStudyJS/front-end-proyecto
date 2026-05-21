@@ -1,0 +1,162 @@
+.tiendaWrapper {
+    /* Mantenemos el mismo fondo azul degradado de tu mapa para que se sienta la misma app */
+    background: linear-gradient(180deg, #5db6ff 0%, #2a78d4 100%);
+    color: #0b2545; /* Azul muy oscuro para que los textos se lean perfectamente */
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+/* --- SECCIÓN SUPERIOR (PREVIEW) --- */
+.previewSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Efecto Vidrio: Blanco semi-transparente */
+    background: rgba(255, 255, 255, 0.45); 
+    /* Esta línea difumina sutilmente lo que está detrás del cuadro */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    border-radius: 24px;
+    padding: 25px;
+    width: 100%;
+    max-width: 450px;
+    /* Sombra suave y azulada para dar profundidad sin verse sucia */
+    box-shadow: 0 10px 30px rgba(11, 37, 69, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    margin-bottom: 30px;
+}
+
+.characterContainer {
+    width: 100%;
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Fondo degradado suave en tonos celestes */
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); 
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.characterImage {
+    height: 85%;
+    object-fit: contain;
+}
+
+.characterInfo {
+    text-align: center;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.characterInfo h2 {
+    margin: 5px 0;
+    font-size: 1.6rem;
+    color: #0b2545; /* Azul marino */
+    font-weight: 700;
+}
+
+.precioTag {
+    display: inline-block;
+    background-color: #fca311; /* Color naranja/oro para destacar las monedas */
+    color: white;
+    font-weight: bold;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(252, 163, 17, 0.3);
+}
+
+.buyBtn {
+    width: 100%;
+    background-color: #0077b6; /* Azul rey llamativo para el botón de acción */
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.3);
+}
+
+.buyBtn:hover {
+    background-color: #03045e; /* Azul más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+}
+
+.divider {
+    width: 100%;
+    max-width: 800px;
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4); /* Línea divisoria muy sutil */
+    margin: 25px 0;
+}
+
+/* --- SECCIÓN INFERIOR (CATÁLOGO) --- */
+.catalogSection {
+    width: 100%;
+    max-width: 800px;
+}
+
+.catalogSection h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+}
+
+.gridRopa {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+}
+
+.itemCard {
+    /* Tarjetas inferiores también con efecto vidrio pero ligeramente más transparentes */
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 18px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.itemCard:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
+}
+
+/* Estilo especial para resaltar la ropa seleccionada */
+.activeItem {
+    background: rgba(255, 255, 255, 0.85); /* Se vuelve casi blanca sólida */
+    border: 2px solid #0077b6; /* Borde azul rey */
+    box-shadow: 0 8px 20px rgba(0, 119, 182, 0.2);
+}
+
+.miniImg {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.itemCard p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0b2545;
+}

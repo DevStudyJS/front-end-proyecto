@@ -1,0 +1,320 @@
+/* ===== Variables CSS ===== */
+:root {
+  --footer-bg: #0f172a; /* slate-900 */
+  --footer-text: #ffffff;
+  --footer-text-muted: #9ca3af; /* gray-400 */
+  --footer-text-dim: #6b7280; /* gray-500 */
+  --footer-border: #1e293b; /* slate-800 */
+  --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+  --transition-normal: 300ms ease;
+  --transition-fast: 150ms ease;
+}
+
+/* ===== Footer Base ===== */
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.5), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.footer:hover::before {
+  opacity: 1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ===== Grid Layout Desktop Only ===== */
+.mainSection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+/* ===== Columna 1: Logo y Descripción ===== */
+.brandColumn {
+  grid-column: span 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.logoIcon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.logoIcon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.brand:hover .logoIcon::before {
+  left: 100%;
+}
+
+.brand:hover .logoIcon {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.5);
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--footer-text);
+  transition: filter var(--transition-fast);
+}
+
+.brand:hover .logoText {
+  filter: brightness(1.1);
+}
+
+.description {
+  color: var(--footer-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.625;
+  margin-bottom: 1.5rem;
+  max-width: 280px;
+}
+
+/* ===== Columnas de Enlaces ===== */
+.linksColumn {
+  grid-column: span 1;
+}
+
+.columnTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--footer-text);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.columnTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--primary-gradient);
+  border-radius: 2px;
+  transition: width var(--transition-normal);
+}
+
+.linksColumn:hover .columnTitle::after {
+  width: 60px;
+}
+
+.linksList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.linkItem {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.linkItem:nth-child(1) { animation-delay: 0.1s; }
+.linkItem:nth-child(2) { animation-delay: 0.15s; }
+.linkItem:nth-child(3) { animation-delay: 0.2s; }
+.linkItem:nth-child(4) { animation-delay: 0.25s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footerLink {
+  color: var(--footer-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.footerLink:hover {
+  color: var(--footer-text);
+  transform: translateX(4px);
+}
+
+.footerLink::after {
+  content: '→';
+  position: absolute;
+  right: -20px;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  color: #3b82f6;
+}
+
+.footerLink:hover::after {
+  opacity: 1;
+  right: -24px;
+}
+
+/* ===== Contacto con Iconos ===== */
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--footer-text-muted);
+  font-size: 0.875rem;
+}
+
+.contactIcon {
+  color: var(--footer-text-muted);
+  font-size: 1.125rem;
+  margin-top: 0.125rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.contactItem:hover .contactIcon {
+  color: #3b82f6;
+  transform: scale(1.1);
+}
+
+.contactLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.contactLink:hover {
+  color: var(--footer-text);
+}
+
+/* ===== Línea Divisoria ===== */
+.divider {
+  border-top: 1px solid var(--footer-border);
+  padding-top: 2rem;
+}
+
+.dividerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ===== Copyright ===== */
+.copyright {
+  color: var(--footer-text-dim);
+  font-size: 0.875rem;
+  text-align: left;
+  margin: 0;
+}
+
+/* ===== Links Legales ===== */
+.legalLinks {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.legalLink {
+  color: var(--footer-text-dim);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.legalLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary-gradient);
+  transition: width var(--transition-normal);
+}
+
+.legalLink:hover {
+  color: var(--footer-text);
+}
+
+.legalLink:hover::after {
+  width: 100%;
+}
+
+/* ===== Efectos de Entrada al Cargar ===== */
+.footerLoaded .mainSection {
+  animation: slideInFromBottom 0.6s ease forwards;
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Efecto de Pulso en Logo (opcional para gamificación) ===== */
+@keyframes gentlePulse {
+  0%, 100% { box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 10px 25px -3px rgba(168, 85, 247, 0.5); }
+}
+
+.logoIcon.pulse {
+  animation: gentlePulse 3s ease-in-out infinite;
+}
