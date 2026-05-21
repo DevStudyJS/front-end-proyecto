@@ -1,58 +1,187 @@
-.mainLayout {
-  min-height: 100vh;
-  background: #030712;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+/* ===== Variables CSS ===== */
+:root {
+  --bg-primary: #030712;
+    --bg-secondary: #111827;
+      --text-muted: rgba(255, 255, 255, 0.3);
+        --transition-normal: 300ms ease;
+        }
 
-.leftSection {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  position: relative;
-  z-index: 10;
-}
+        /* ===== Main Layout ===== */
+        .mainLayout {
+          display: flex;
+            min-height: 100vh;
+              width: 100%;
+                background: #0f172a;
+                  overflow: hidden; /* Evita scroll horizontal en móvil */
+                  }
 
-.mobileBg {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #111827, #030712, #000000);
-}
+                  /* ===== Left Section (Form) ===== */
+                  .leftSection {
+                    flex: 1;
+                      display: flex;
+                        flex-direction: column;
+                          justify-content: center;
+                            align-items: center;
+                              padding: 1.5rem;
+                                z-index: 1;
+                                  min-width: 0;
+                                  }
 
-.rightSection {
-  width: 100%;
-  height: 45vh;
-  position: relative;
-}
+                                  /* ===== Right Section (Visual) ===== */
+                                  .rightSection {
+                                    flex: 1;
+                                      position: relative;
+                                        min-width: 50%;
+                                          z-index: 999;
+                                          }
 
-.footerText {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  z-index: 5;
-}
+                                          .mobileFallback {
+                                            display: flex;
+                                              align-items: center;
+                                                justify-content: center;
+                                                  padding: 2rem 1rem;
+                                                    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                                                      min-height: 200px;
+                                                      }
 
-@media (min-width: 768px) {
-  .mainLayout {
-    flex-direction: row;
-  }
-  .leftSection {
-    width: 50%;
-    padding: 3rem;
-  }
-  .mobileBg {
-    display: none;
-  }
-  .rightSection {
-    width: 50%;
-    height: 100vh;
-  }
-}
+                                                      .mobileAvatarPlaceholder {
+                                                        display: flex;
+                                                          flex-direction: column;
+                                                            align-items: center;
+                                                              gap: 1rem;
+                                                                padding: 1.5rem;
+                                                                  background: rgba(255, 255, 255, 0.05);
+                                                                    border-radius: 16px;
+                                                                      border: 2px dashed rgba(255, 255, 255, 0.2);
+                                                                      }
+
+                                                                      .mobileAvatarImage {
+                                                                        width: 120px;
+                                                                          height: 120px;
+                                                                            border-radius: 50%;
+                                                                              object-fit: cover;
+                                                                                border: 3px solid #3b82f6;
+                                                                                  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+                                                                                  }
+
+                                                                                  .mobileHint {
+                                                                                    color: #94a3b8;
+                                                                                      font-size: 0.9rem;
+                                                                                        text-align: center;
+                                                                                        }
+
+                                                                                        /* 🖥️ Ocultar sección derecha en móvil con CSS (fallback adicional) */
+                                                                                        @media (max-width: 767px) {
+                                                                                          .mainLayout {
+                                                                                              flex-direction: column;
+                                                                                                }
+                                                                                                  
+                                                                                                    .leftSection {
+                                                                                                        width: 100%;
+                                                                                                            min-height: auto;
+                                                                                                                padding: 1rem;
+                                                                                                                  }
+                                                                                                                    
+                                                                                                                      .rightSection {
+                                                                                                                          display: none !important;
+                                                                                                                            }
+                                                                                                                            }
+
+                                                                                                                            /* ===== Footer Text ===== */
+                                                                                                                            .footerText {
+                                                                                                                              position: absolute;
+                                                                                                                                bottom: clamp(1rem, 3vw, 1.5rem);
+                                                                                                                                  left: clamp(1rem, 3vw, 1.5rem);
+                                                                                                                                    right: clamp(1rem, 3vw, 1.5rem);
+                                                                                                                                      text-align: center;
+                                                                                                                                        color: var(--text-muted);
+                                                                                                                                          font-size: clamp(0.6875rem, 2vw, 0.75rem);
+                                                                                                                                            letter-spacing: 0.05em;
+                                                                                                                                              z-index: 5;
+                                                                                                                                                line-height: 1.4;
+                                                                                                                                                  word-break: break-word;
+                                                                                                                                                  }
+
+                                                                                                                                                  /* ===== Media Queries - Mobile pequeño ≤320px ===== */
+                                                                                                                                                  @media (max-width: 320px) {
+                                                                                                                                                    .leftSection {
+                                                                                                                                                        padding: 1rem;
+                                                                                                                                                          }
+                                                                                                                                                            .rightSection {
+                                                                                                                                                                min-height: 20vh;
+                                                                                                                                                                  }
+                                                                                                                                                                    .footerText {
+                                                                                                                                                                        font-size: 0.625rem;
+                                                                                                                                                                            bottom: 0.75rem;
+                                                                                                                                                                                left: 0.75rem;
+                                                                                                                                                                                    right: 0.75rem;
+                                                                                                                                                                                      }
+                                                                                                                                                                                      }
+
+                                                                                                                                                                                      /* ===== Media Queries - Mobile ≤480px ===== */
+                                                                                                                                                                                      @media (max-width: 480px) {
+                                                                                                                                                                                        .leftSection {
+                                                                                                                                                                                            align-items: flex-start;
+                                                                                                                                                                                                padding-top: 2rem;
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                    .rightSection {
+                                                                                                                                                                                                        min-height: 30vh;
+                                                                                                                                                                                                            border-radius: 1rem 1rem 0 0;
+                                                                                                                                                                                                              }
+                                                                                                                                                                                                              }
+
+                                                                                                                                                                                                              /* ===== Media Queries - Tablet ≤768px ===== */
+                                                                                                                                                                                                              @media (max-width: 768px) {
+                                                                                                                                                                                                                .mainLayout {
+                                                                                                                                                                                                                    flex-direction: column;
+                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                        .leftSection {
+                                                                                                                                                                                                                            width: 100%;
+                                                                                                                                                                                                                                padding: 2rem 1.5rem;
+                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                    .rightSection {
+                                                                                                                                                                                                                                        width: 100%;
+                                                                                                                                                                                                                                            min-height: 35vh;
+                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                              }
+
+                                                                                                                                                                                                                                              /* ===== Media Queries - Desktop ≥768px ===== */
+                                                                                                                                                                                                                                              @media (min-width: 768px) {
+                                                                                                                                                                                                                                                .mainLayout {
+                                                                                                                                                                                                                                                    flex-direction: row;
+                                                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                                                        .leftSection {
+                                                                                                                                                                                                                                                            width: 50%;
+                                                                                                                                                                                                                                                                padding: clamp(2rem, 4vw, 3rem);
+                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                                                                        .mobileBg {
+                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                                                                .rightSection {
+                                                                                                                                                                                                                                                                                    width: 50%;
+                                                                                                                                                                                                                                                                                        min-height: 100dvh;
+                                                                                                                                                                                                                                                                                            flex-shrink: 0;
+                                                                                                                                                                                                                                                                                              }
+                                                                                                                                                                                                                                                                                              }
+
+                                                                                                                                                                                                                                                                                              /* ===== Media Queries - Desktop grande ≥1280px ===== */
+                                                                                                                                                                                                                                                                                              @media (min-width: 1280px) {
+                                                                                                                                                                                                                                                                                                .leftSection {
+                                                                                                                                                                                                                                                                                                    padding: 4rem 5rem;
+                                                                                                                                                                                                                                                                                                      }
+                                                                                                                                                                                                                                                                                                        .footerText {
+                                                                                                                                                                                                                                                                                                            left: 3rem;
+                                                                                                                                                                                                                                                                                                                right: 3rem;
+                                                                                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                                                                                                                                  /* ===== Accesibilidad - Modo reducido de movimiento ===== */
+                                                                                                                                                                                                                                                                                                                  @media (prefers-reduced-motion: reduce) {
+                                                                                                                                                                                                                                                                                                                    .mainLayout,
+                                                                                                                                                                                                                                                                                                                      .leftSection,
+                                                                                                                                                                                                                                                                                                                        .rightSection,
+                                                                                                                                                                                                                                                                                                                          .mobileBg {
+                                                                                                                                                                                                                                                                                                                              transition: none !important;
+                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                }

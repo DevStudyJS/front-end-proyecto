@@ -8,7 +8,7 @@ interface HowItWorksProps {
 }
 
 // Emojis como alternativa a RemixIcon (sin dependencias externas)
-const stepEmojis = ['👤', '🗺️', '📚', '🏆'];
+const stepEmojis = ['user-6-fill', 'treasure-map-line', 'book-ai-line', 'trophy-line'];
 
 export const HowItWorks = ({ title, subtitle, items }: HowItWorksProps) => {
   return (
@@ -47,9 +47,8 @@ const StepCard = ({ item, index }: { item: StepItem; index: number }) => {
 
       {/* Icono con emoji o SVG */}
       <div className={styles.iconWrapper}>
-        <span className={styles.icon} aria-hidden="true">
-          {stepEmojis[index % stepEmojis.length]}
-        </span>
+        <i className={`${styles.icon}  ri-${stepEmojis[index % stepEmojis.length]}`} aria-hidden="true"></i>
+
       </div>
 
       {/* Título */}
