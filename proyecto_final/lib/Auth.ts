@@ -11,7 +11,7 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
     const normalizedEmail = data.email.trim().toLowerCase();
     const normalizedUsuario = data.usuario.trim();
     const normalizedEscuela = data.escuela.trim();
-
+    
     console.log('[Auth] signUp iniciando:', { 
       email: normalizedEmail, 
       usuario: normalizedUsuario,
@@ -27,7 +27,7 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
           usuario: normalizedUsuario,
           escuela: normalizedEscuela,
           rol: data.rol || 'estudiante',
-          avatar: data.avatar || '',
+          avatar: data.avatar || 'https://api.dicebear.com/9.x/pixel-art/svg?seed=default', // ✅ Nunca vacío
         },
         emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/index`,
       },
@@ -35,15 +35,13 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
 
     if (authError) {
       console.error('[Auth] auth.signUp error:', authError);
+<<<<<<< HEAD
 
+=======
+      // ... (tus mensajes de error gamificados se mantienen) ...
+>>>>>>> 77b03dc3f088cb20e3363c6b0667a19c89ee9057
       if (authError.message?.includes('already registered')) {
         return { data: null, error: new Error('⚠️ Este correo ya tiene un personaje registrado.') };
-      }
-      if (authError.message?.includes('invalid')) {
-        return { data: null, error: new Error('❌ Formato de correo inválido.') };
-      }
-      if (authError.message?.includes('password')) {
-        return { data: null, error: new Error('🔒 La contraseña debe tener al menos 6 caracteres.') };
       }
       throw authError;
     }
@@ -52,6 +50,7 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
       throw new Error('No se pudo crear la cuenta de autenticación.');
     }
 
+<<<<<<< HEAD
     // ✅ Aquí logueamos el usuario recibido
     console.log('[Auth] Usuario recibido de Supabase:', 
       {
@@ -67,6 +66,35 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
     return { data: authData.user, error: null };
 
   } catch (error: any) {
+=======
+    console.log('[Auth] ✅ Usuario creado en auth.users:', authData.user.id);
+
+    // 🎯 2️⃣ ✅ EL TRIGGER SE ENCARGA DE public.usuarios
+    // Solo esperamos un momento para que el trigger termine (opcional pero recomendado)
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // 🎮 3️⃣ Verificar que el perfil se creó correctamente (para feedback inmediato)
+    const { data: perfil, error: perfilError } = await supabase
+      .from('usuarios')
+      .select('avatar, usuario, rol')
+      .eq('id_usuario', authData.user.id)
+      .maybeSingle();
+
+    if (perfilError) {
+      console.warn('[Auth] ⚠️ Perfil no disponible inmediatamente, pero el registro fue exitoso');
+      // No bloqueamos el flujo, el trigger puede tardar unos ms
+    } else {
+      console.log('[Auth] ✅ Perfil verificado en public.usuarios:', {
+        avatar: perfil?.avatar?.substring(0, 60),
+        usuario: perfil?.usuario
+      });
+    }
+
+    return { data: authData.user, error: null };
+
+  } catch (error: any) {
+    // ... (tu manejo de errores se mantiene igual) ...
+>>>>>>> 77b03dc3f088cb20e3363c6b0667a19c89ee9057
     console.error('[Auth] ❌ Error crítico en signUp:', error);
     return { data: null, error: error instanceof Error ? error : new Error('Quest fallida. Intenta de nuevo.') };
   }
