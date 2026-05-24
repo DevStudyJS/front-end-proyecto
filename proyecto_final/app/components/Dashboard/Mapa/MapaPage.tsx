@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation'
-import { supabase } from "@/lib/supabase";
+import { createClient } from '@/lib/supabase/client' 
 import Link from "next/link";
 import styles from "./mapa.module.css";
 import HeaderFondo from "../HeaderFondo/headerFondo";
 
+const supabase = createClient();
 const visualesIsla: Record<number, { img: string; bloqueado: boolean }> = {
   1: { img: "/montaña.jpg", bloqueado: false },
   2: { img: "/islanormal.jpg", bloqueado: true },

@@ -1,9 +1,8 @@
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client' 
 import styles from './courses.module.css'
-// Importa el CSS especial para que las fórmulas tengan fuente de libro de matemáticas
 import 'katex/dist/katex.min.css'; 
-// Importa los componentes de React
 import { InlineMath, BlockMath } from 'react-katex';
+const supabase = createClient();
 
 // 1. EL DICCIONARIO DE BIOMAS
 const islandThemes: Record<number, string> = {

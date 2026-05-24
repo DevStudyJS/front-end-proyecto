@@ -1,7 +1,8 @@
 import { User, Session, AuthError } from '@supabase/supabase-js';
-import { supabase } from './supabase';
+import { createClient } from '@/lib/supabase/client' 
 import { Usuarios, SignUpFormData, SignInFormData, UpdateProfileData, AuthResult } from './database.types';
 
+const supabase = createClient();
 /**
  * Registro de nuevo usuario.
  * Crea la cuenta en Supabase Auth. El trigger en la BD se encarga de `public.usuarios`.

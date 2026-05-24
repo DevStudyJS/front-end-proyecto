@@ -1,10 +1,11 @@
 // app/courses/[id]/lessons/page.tsx
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client' 
 import styles from './Lesson.module.css'
 import 'katex/dist/katex.min.css'
 import { InlineMath, BlockMath } from 'react-katex'
 import Link from 'next/link'
 
+const supabase = createClient();
 // =========================================
 // SISTEMA DE GAMIFICACIÓN
 // =========================================
