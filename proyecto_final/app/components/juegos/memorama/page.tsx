@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 import { useEffect, useState } from "react";
 import { agregaMemorama, muestraMemorama, pares, deleteCarta } from "../../../lib/cartasService"
 import { supabase } from "../../../lib/supabase"
@@ -82,4 +82,4 @@ export function Memorama()
     );
 };
 
-export default Memorama;
+export default Memorama;*/
