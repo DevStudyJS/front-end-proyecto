@@ -1,13 +1,15 @@
-import Memorama from '@/app/components/juegos/Memorama'
+import MemoramaGame from '@/app/components/juegos/Memorama'
 import Link from 'next/link'
 import styles from './page.module.css'
 
-export default async function MemoramaGamePage({ 
+export default async function MemoramaRoute({ 
   params 
 }: { 
   params: Promise<{ id: string; lessonId: string }> 
 }) {
   const { id, lessonId } = await params
+  const baseRoute = `/index/courses/${id}/lesson/${lessonId}`
+
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.headerBar}>
@@ -15,12 +17,12 @@ export default async function MemoramaGamePage({
           <p className={styles.label}>Curso {id} · Lección {lessonId}</p>
           <h1 className={styles.title}>Memorama</h1>
         </div>
-        <Link href={`/courses/${id}/lesson/${lessonId}/juegos`} className={styles.backLink}>
+        <Link href={`${baseRoute}/juegos`} className={styles.backLink}>
           ← Volver a selección
         </Link>
       </div>
       <div className={styles.gameArea}>
-        <Memorama />
+        <MemoramaGame courseId={id} lessonId={Number(lessonId)} />
       </div>
     </div>
   )

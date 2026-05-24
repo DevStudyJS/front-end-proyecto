@@ -1,28 +1,28 @@
-import Crucigrama from '@/app/components/juegos/Crucigrama'
+import CrucigramaGame from '@/app/components/juegos/Crucigrama'
 import Link from 'next/link'
 import styles from './page.module.css'
 
-interface CrucigramaRouteProps {
-  params: {
-    id: string
-    lessonId: string
-  }
-}
+export default async function CrucigramaRoute({ 
+  params 
+}: { 
+  params: Promise<{ id: string; lessonId: string }> 
+}) {
+  const { id, lessonId } = await params
+  const baseRoute = `/index/courses/${id}/lesson/${lessonId}`
 
-export default function CrucigramaGamePage({ params }: CrucigramaRouteProps) {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.headerBar}>
         <div>
-          <p className={styles.label}>Curso {params.id} · Lección {params.lessonId}</p>
+          <p className={styles.label}>Curso {id} · Lección {lessonId}</p>
           <h1 className={styles.title}>Crucigrama</h1>
         </div>
-        <Link href={`/courses/${params.id}/lesson/${params.lessonId}/juegos`} className={styles.backLink}>
+        <Link href={`${baseRoute}/juegos`} className={styles.backLink}>
           ← Volver a selección
         </Link>
       </div>
       <div className={styles.gameArea}>
-        <Crucigrama />
+        <CrucigramaGame courseId={id} lessonId={Number(lessonId)} />
       </div>
     </div>
   )

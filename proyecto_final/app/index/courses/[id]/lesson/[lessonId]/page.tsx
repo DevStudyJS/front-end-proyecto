@@ -1,17 +1,13 @@
 import Link from 'next/link'
 import styles from './page.module.css'
 
-interface LessonRouteProps {
-  params: Promise<{
-    id: string
-    lessonId: string
-  }>
-}
-
-export default async function LessonRoute({ params }: LessonRouteProps) {
+export default async function LessonRoute({ 
+  params 
+}: { 
+  params: Promise<{ id: string; lessonId: string }> 
+}) {
   const { id, lessonId } = await params
   const baseRoute = `/index/courses/${id}`
-  console.log("HERE")
 
   return (
     <div className={styles.pageWrapper}>
@@ -20,7 +16,6 @@ export default async function LessonRoute({ params }: LessonRouteProps) {
           <span>Curso {id}</span>
           <span>Lección {lessonId}</span>
         </div>
-
         <div className={styles.mainContent}>
           <h1 className={styles.title}>Lección {lessonId}</h1>
           <p className={styles.description}>

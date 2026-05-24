@@ -8,6 +8,7 @@ export default async function GameChooserPage({
 }) {
   const { id, lessonId } = await params
   const baseRoute = `/index/courses/${id}/lesson/${lessonId}`
+
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.card}>
@@ -16,7 +17,6 @@ export default async function GameChooserPage({
           <span>Lección {lessonId}</span>
           <span>Juegos</span>
         </div>
-
         <div className={styles.header}>
           <p className={styles.overline}>Selecciona tu desafío</p>
           <h1 className={styles.title}>¿Qué quieres jugar?</h1>
@@ -24,7 +24,6 @@ export default async function GameChooserPage({
             Escoge entre el crucigrama o el memorama para reforzar lo aprendido en esta lección.
           </p>
         </div>
-
         <div className={styles.buttonRow}>
           <Link href={`${baseRoute}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
             Crucigrama
