@@ -22,7 +22,7 @@ export default async function CrucigramaRoute({
         </Link>
       </div>
       <div className={styles.gameArea}>
-        <CrucigramaGame courseId={id} lessonId={Number(lessonId)} />
+        <CrucigramaGame />
       </div>
     </div>
   )
