@@ -28,9 +28,9 @@ export default async function GameChooserPage({
           <Link href={`${baseRoute}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
             Crucigrama
           </Link>
-          {/*<Link href={`${baseRoute}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
-            Memorama
-          </Link>*/}
+          <Link href={`${baseRoute}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
+            Memorama (proximamente)
+          </Link>
         </div>
       </div>
     </div>
