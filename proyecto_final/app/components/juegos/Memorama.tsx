@@ -1,70 +1,66 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { agregaMemorama, muestraMemorama, pares, deleteCarta } from "@/lib/cartasService";
-import { Card } from "@/lib/types";
+import { useEffect, useState } from "react"
+import { muestraMemorama, pares } from "@/lib/cartasService"
+import { Card } from "@/lib/types"
 
-export default function Memorama() {
-  const [cartas, setCartas] = useState<Card[]>([]);
-  const [seleccionadas, setSeleccionadas] = useState<Card[]>([]);
+interface MemoramaGameProps {
+  courseId: string
+  lessonId: number
+}
+
+export default function MemoramaGame({ courseId, lessonId }: MemoramaGameProps) {
+  const [cartas, setCartas] = useState<Card[]>([])
+  const [volteadas, setVolteadas] = useState<number[]>([])
+  const [acertadas, setAcertadas] = useState<number[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await muestraMemorama(1);
-      setCartas(data.sort(() => Math.random() - 0.5));
-    };
-    fetchData();
-  }, []);
+    const cargarCartas = async () => {
+      const data = await muestraMemorama(lessonId) // ✅ Usa lessonId dinámico
+      setCartas(data.sort(() => Math.random() - 0.5))
+    }
+    cargarCartas()
+  }, [lessonId])
 
   const handleFlip = (carta: Card) => {
-    if (seleccionadas.length === 2 || carta.match) return;
+    if (volteadas.length === 2 || acertadas.includes(carta.id) || volteadas.includes(carta.id)) return
 
-    setSeleccionadas([...seleccionadas, carta]);
+    const nuevasVolteadas = [...volteadas, carta.id]
+    setVolteadas(nuevasVolteadas)
 
-    if (seleccionadas.length === 1) {
-      const [primera] = seleccionadas;
-      const segunda = carta;
+    if (nuevasVolteadas.length === 2) {
+      const [primeraId, segundaId] = nuevasVolteadas
+      const primera = cartas.find(c => c.id === primeraId)!
+      const segunda = cartas.find(c => c.id === segundaId)!
 
       if (primera.respuesta === segunda.respuesta) {
-        pares(primera.id, segunda.id);
-        setCartas((prev) =>
-          prev.map((c) =>
-            [primera.id, segunda.id].includes(c.id) ? { ...c, match: true } : c
-          )
-        );
+        pares(primera.id, segunda.id)
+        setAcertadas(prev => [...prev, primeraId, segundaId])
+        setVolteadas([])
       } else {
-        setTimeout(() => {
-          setCartas((prev) =>
-            prev.map((c) =>
-              [primera.id, segunda.id].includes(c.id)
-                ? { ...c, match: false }
-                : c
-            )
-          );
-        }, 1000);
+        setTimeout(() => setVolteadas([]), 1000)
       }
-      setSeleccionadas([]);
     }
-  };
+  }
 
   return (
-    <div className="memorama">
+    <div className="memorama-grid">
       {cartas.map((carta) => (
         <div
           key={carta.id}
-          className={`carta ${carta.match ? "visible" : ""}`}
+          className={`carta ${acertadas.includes(carta.id) ? "match" : volteadas.includes(carta.id) ? "flip" : ""}`}
           onClick={() => handleFlip(carta)}
         >
-          {carta.match ? (
-            <div>
-              <p>{carta.pregunta}</p>
-              <p>{carta.respuesta}</p>
+          {acertadas.includes(carta.id) || volteadas.includes(carta.id) ? (
+            <div className="carta-contenido">
+              <p className="pregunta">{carta.pregunta}</p>
+              <p className="respuesta">{carta.respuesta}</p>
             </div>
           ) : (
-            <span> ??? </span>
+            <span className="verso">🔍</span>
           )}
         </div>
       ))}
     </div>
-  );
+  )
 }

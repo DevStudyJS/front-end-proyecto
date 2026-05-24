@@ -11,19 +11,19 @@ export default function Menu() {
   const [profile, setProfile] = useState<Usuarios | null>(null);
 
   const navItems = [
-    { label: 'Mapa de islas', href: '/index/dashboard' },
-    { label: 'Mi progreso', href: '/index/scoreboard' },
-    { label: 'Ranking global', href: '/index/ranking' },
-    { label: 'Tienda', href: '/index/store' },
-    { label: 'Configuración', href: '/index/config' },
+    { label: 'Mapa de islas', href: '/inicio' },
+    { label: 'Mi progreso', href: '/inicio/scoreboard' },
+    { label: 'Ranking global', href: '/inicio/ranking' },
+    { label: 'Tienda', href: '/inicio/tienda' },
+    { label: 'Configuración', href: '/inicio/config' },
   ];
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   const getItemClass = (href: string) => {
     let className = styles.navItem;
-    if (href === '/index/scoreboard') className = `${styles.navItem} ${styles.scoreItem}`;
-    if (href === '/index/ranking') className = `${styles.navItem} ${styles.rankingItem}`;
+    if (href === '/inicio/scoreboard') className = `${styles.navItem} ${styles.scoreItem}`;
+    if (href === '/inicio/ranking') className = `${styles.navItem} ${styles.rankingItem}`;
     if (isActive(href)) className = `${className} ${styles.active}`;
     return className;
   };
@@ -70,13 +70,6 @@ export default function Menu() {
           <div className={styles.userInfoBox}>
             <strong className={styles.userName}>{profile?.usuario || 'Estudiante Dev'}</strong>
             <span className={styles.userSubtitle}>{profile?.usuario ? `Nivel ${profile.racha_dias ?? 0}` : 'Bienvenido'}</span>
-          </div>
-        </div>
-
-        <div className={styles.statGrid}>
-          <div className={styles.statCardSecondary}>
-            <span className={styles.statValue}>{streakLabel}</span>
-            <span className={styles.statLabel}>Racha</span>
           </div>
         </div>
       </div>

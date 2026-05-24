@@ -8,7 +8,7 @@ export const Footer = () => {
     { name: 'Características', href: '/#features' },
     { name: 'Cómo Funciona', href: '/#how-it-works' },
     { name: 'Testimonios', href: '/#testimonials' },
-    { name: 'Iniciar Sesión', href: '/index/login' },
+    { name: 'Iniciar Sesión', href: '/login' },
   ];
 
   const legalLinks = [

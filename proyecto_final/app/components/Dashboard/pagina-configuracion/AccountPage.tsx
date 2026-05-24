@@ -117,24 +117,21 @@ export default function AccountPage() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          <Link href="/index/dashboard" className={styles.sidebarLink}>
-            Dashboard
+          <Link href="/inicio" className={styles.sidebarLink}>
+            Islas
           </Link>
-          <Link href="/index/config" className={`${styles.sidebarLink} ${styles.activeLink}`}>
-            Account Details
-          </Link>
-          <Link href="/index/config?tab=password" className={styles.sidebarLink}>
-            Change Password
+          <Link href="/inicio/config" className={`${styles.sidebarLink} ${styles.activeLink}`}>
+            Cuenta
           </Link>
           <button
             type="button"
             className={styles.sidebarLink}
             onClick={async () => {
               await signOut()
-              router.push('/index')
+              router.push('/')
             }}
           >
-            Logout
+            Salir
           </button>
         </nav>
       </aside>

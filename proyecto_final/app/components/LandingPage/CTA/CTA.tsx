@@ -53,7 +53,7 @@ export const CTA = ({ title, subtitle, btnPrimary, btnSecondary, badges }: CTAPr
         <p className={styles.subtitle}>{subtitle}</p>
         
         <div className={styles.buttonsContainer}>
-          <Link href="/index/login" className={`${styles.btn} ${styles.btnPrimary}`} aria-label={btnPrimary}>
+          <Link href="/inicio/login" className={`${styles.btn} ${styles.btnPrimary}`} aria-label={btnPrimary}>
             <span className={styles.icon} aria-hidden="true">🚀</span>
             {btnPrimary}
           </Link>

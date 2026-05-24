@@ -1,15 +1,13 @@
 import Link from 'next/link'
 import styles from './page.module.css'
 
-interface GameChooserRouteProps {
-  params: {
-    id: string
-    lessonId: string
-  }
-}
-
-export default function GameChooserPage({ params }: GameChooserRouteProps) {
-  const { id, lessonId } = params
+export default async function GameChooserPage({ 
+  params 
+}: { 
+  params: Promise<{ id: string; lessonId: string }> 
+}) {
+  const { id, lessonId } = await params
+  const baseRoute = `/inicio/courses/${id}/lesson/${lessonId}`
 
   return (
     <div className={styles.pageWrapper}>
@@ -19,7 +17,6 @@ export default function GameChooserPage({ params }: GameChooserRouteProps) {
           <span>Lección {lessonId}</span>
           <span>Juegos</span>
         </div>
-
         <div className={styles.header}>
           <p className={styles.overline}>Selecciona tu desafío</p>
           <h1 className={styles.title}>¿Qué quieres jugar?</h1>
@@ -27,12 +24,11 @@ export default function GameChooserPage({ params }: GameChooserRouteProps) {
             Escoge entre el crucigrama o el memorama para reforzar lo aprendido en esta lección.
           </p>
         </div>
-
         <div className={styles.buttonRow}>
-          <Link href={`/courses/${id}/lesson/${lessonId}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
+          <Link href={`${baseRoute}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
             Crucigrama
           </Link>
-          <Link href={`/courses/${id}/lesson/${lessonId}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
+          <Link href={`${baseRoute}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
             Memorama
           </Link>
         </div>

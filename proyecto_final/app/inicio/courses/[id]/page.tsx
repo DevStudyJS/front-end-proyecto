@@ -5,8 +5,10 @@ interface CourseSelectionPageProps {
   params: { id: string }
 }
 
-export default async function CourseSelectionPage({ params }: CourseSelectionPageProps) {
-  const courseId = params.id
+export default async function CourseSelectionPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  //console.log('📍 ID del curso actual:', id)
+  const baseRoute = `/inicio/courses/${id}`
 
   return (
     <div className={styles.pageWrapper}>
@@ -20,10 +22,10 @@ export default async function CourseSelectionPage({ params }: CourseSelectionPag
         </div>
 
         <div className={styles.buttonRow}>
-          <Link href={`/courses/${courseId}/content`} className={`${styles.button} ${styles.contentButton}`}>
+          <Link href={`${baseRoute}/content`} className={`${styles.button} ${styles.contentButton}`}>
             Contenido
           </Link>
-          <Link href={`/courses/${courseId}/lesson/1/juegos`} className={`${styles.button} ${styles.gameButton}`}>
+          <Link href={`${baseRoute}/lesson/1/juegos`} className={`${styles.button} ${styles.gameButton}`}>
             Juegos
           </Link>
         </div>
