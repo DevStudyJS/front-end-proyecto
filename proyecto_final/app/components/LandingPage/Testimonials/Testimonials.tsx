@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Review } from '@/lib/landing.types';
+import { useResponsiveCardSize } from '@/lib/useResponsiveCardSize';
 import styles from './Testimonials.module.css';
 
 interface TestimonialsProps {
@@ -8,9 +9,8 @@ interface TestimonialsProps {
   reviews: Review[];
 }
 
-const CARD_WIDTH = 350 + 24; // 350px card + 24px gap (1.5rem)
-
 export const Testimonials = ({ title, subtitle, reviews }: TestimonialsProps) => {
+  const { totalWidth: CARD_WIDTH, height: CARD_HEIGHT } = useResponsiveCardSize();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

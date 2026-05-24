@@ -67,10 +67,10 @@ export const Hero = ({ courses, lessons, students }: HeroProps) => {
 
         <div className={styles.buttonGroup}>
           <button className={styles.btnPrimary}>
-            <span>🚀 Comenzar Aventura</span>
+            <span><i className={`ri-space-ship-2-line`} aria-hidden="true"></i> Comenzar Aventura</span>
           </button>
           <button className={styles.btnSecondary}>
-            ⓘ Ver Cómo Funciona
+            <i className={`ri-question-line`} aria-hidden="true"></i> Ver Cómo Funciona
           </button>
         </div>
 

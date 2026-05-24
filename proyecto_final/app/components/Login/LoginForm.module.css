@@ -11,6 +11,8 @@
   border-radius: 1rem;
   border: 1px solid rgba(55, 65, 81, 0.5);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title {
@@ -116,7 +118,6 @@
   overflow: hidden;
 }
 
-/* Efecto hover suave con gradiente actualizado */
 .modernLink::before {
   content: '';
   position: absolute;
@@ -144,7 +145,6 @@
   box-shadow: 0 2px 8px rgba(6, 182, 212, 0.2);
 }
 
-/* Accesibilidad moderna */
 .modernLink:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #06b6d4;
@@ -210,4 +210,12 @@
 .link:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ===== Desktop: Máximo 50% del viewport ===== */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 50vw;
+    padding: 2.5rem 3rem;
+  }
 }

@@ -56,11 +56,11 @@ export const Footer = () => {
             <h3 className={styles.columnTitle}>Contacto</h3>
             <ul className={styles.linksList}>
               <li className={styles.contactItem}>
-                <span className={styles.contactIcon} aria-hidden="true">📍</span>
+                <i className={`ri-map-pin-3-fill`} aria-hidden="true"></i>
                 <span>FES Acatlán, UNAM, México</span>
               </li>
               <li className={styles.contactItem}>
-                <span className={styles.contactIcon} aria-hidden="true">✉️</span>
+                <i className={`ri-mail-fill`} aria-hidden="true"></i>
                 <a href="mailto:devstudy@gmail.com" className={styles.contactLink}>
                   devstudy@gmail.com
                 </a>
