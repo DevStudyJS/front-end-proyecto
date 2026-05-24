@@ -16,7 +16,10 @@ export default function LoginPage() {
 
   const handleLoginSuccess = () => {
     setIsLoggingIn(true)
-    setTimeout(() => router.push('/index'), 800)
+    setTimeout(() => {
+      router.push('/inicio')
+      router.refresh()
+    }, 800)
   }
 
   return (

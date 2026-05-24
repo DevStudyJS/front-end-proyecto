@@ -1,0 +1,90 @@
+.pageWrapper {
+  min-height: 100vh;
+  padding: 48px 24px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: min(960px, 100%);
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12);
+  padding: 44px;
+  border: 1px solid #e5e7eb;
+}
+
+.header {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+
+.overline {
+  display: block;
+  margin-bottom: 12px;
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 14px;
+  color: #0f172a;
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin: 0;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.button {
+  flex: 1 1 220px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+.contentButton {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.gameButton {
+  background: #f97316;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .pageWrapper {
+    padding: 24px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+}
