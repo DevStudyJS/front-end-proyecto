@@ -8,13 +8,8 @@ import Link from 'next/link'
 import { Center } from '@react-three/drei'
 
 // 🎨 Constantes de avatar
-<<<<<<< HEAD
-export const FALLBACK_AVATAR = 'https://static.wikia.nocookie.net/roblox/images/3/3b/NOOB%21.png/revision/latest/scale-to-width-down/284?cb=20210630174226'
+export const FALLBACK_AVATAR = 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png'
 export const AVATAR_BASE_URL = 'https://api.dicebear.com/9.x/pixel-art/svg?seed='
-=======
-const FALLBACK_AVATAR = 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png'
-const AVATAR_BASE_URL = 'https://api.dicebear.com/9.x/pixel-art/svg?seed='
->>>>>>> 77b03dc3f088cb20e3363c6b0667a19c89ee9057
 
 // 🎮 Mapeo retro de roles (estética 8-bit)
 const ROLE_LABELS: Record<Usuarios['rol'], string> = {
@@ -96,7 +91,7 @@ export default function SignupForm() {
 
       console.log('✅ Registro exitoso:', data)
       setSuccess(true)
-      setTimeout(() => router.push('/login?registered=true'), 2500)
+      setTimeout(() => router.push('/index/login?registered=true'), 2500)
       
     } catch (err: any) {
       console.error('❌ Error en signUp:', {
@@ -241,7 +236,7 @@ export default function SignupForm() {
           ¿Ya tienes cuenta?{' '}
           <button 
             className={styles.link} 
-            onClick={() => router.push('/login')}
+            onClick={() => router.push('/index/login')}
             disabled={loading}
           >
             ENTRAR

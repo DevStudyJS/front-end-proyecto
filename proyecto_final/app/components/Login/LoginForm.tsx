@@ -1,80 +1,102 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { signIn, getCurrentUser } from '@/lib/Auth'
-import type { Usuarios } from '@/lib/database.types'
+import { useRouter } from 'next/navigation'
+import { signInWithIdentifier } from '@/lib/Auth'
+import { lookupUser } from '@/lib/userLookup'
 import styles from './LoginForm.module.css'
-import Link from 'next/link'
-import { lookupUser, isValidEmail } from '@/lib/userLookup'
-
 
 export interface PlayerData {
   username: string
   avatar: string
   title: string
-  id_usuario?: string
-}
-
-const FALLBACK_AVATAR = 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png'
-
-const ROLE_TITLES: Record<Usuarios['rol'], string> = {
-  estudiante: 'Aprendiz Dev',
-  docente: 'Maestro del Código',
-  administrador: 'Guardián del Sistema',
-  invitado: 'Explorador'
 }
 
 interface Props {
-  onPreviewChange: (player: PlayerData | null) => void
-  onLoginSuccess: (player: PlayerData) => void
+  onPreviewChange?: (player: PlayerData | null) => void
+  onLoginSuccess?: (player: PlayerData) => void
+}
+
+const ROLE_TITLES: Record<string, string> = {
+  estudiante: 'Explorador Estelar',
+  docente: 'Maestro del Cosmos',
+  administrador: 'Guardían del Servidor',
+  invitado: 'Visitante Galáctico',
+}
+
+const getTitleFromRole = (rol?: string) => {
+  return ROLE_TITLES[rol ?? 'estudiante'] || 'Estudiante Dev'
 }
 
 export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
+  const router = useRouter()
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
-  const [previewPlayer, setPreviewPlayer] = useState<PlayerData | null>(null)
   const [loading, setLoading] = useState(false)
+  const [previewLoading, setPreviewLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [previewPlayer, setPreviewPlayer] = useState<PlayerData | null>(null)
 
-  // 🔍 Búsqueda en tiempo real (150ms para respuesta inmediata)
   useEffect(() => {
-    if (!identifier.trim()) {
-    setPreviewPlayer(null)
-    onPreviewChange(null)
-    return
+    let active = true
+    const lookup = async () => {
+      const cleanValue = identifier.trim()
+      if (!cleanValue) {
+        setPreviewPlayer(null)
+        onPreviewChange?.(null)
+        return
+      }
+
+      setPreviewLoading(true)
+      const { user, error: lookupError } = await lookupUser(cleanValue)
+      if (!active) return
+      setPreviewLoading(false)
+
+      if (lookupError) {
+        console.error('[LoginForm] Error lookupUser:', lookupError)
+        setPreviewPlayer(null)
+        onPreviewChange?.(null)
+        return
+      }
+
+      if (!user) {
+        setPreviewPlayer(null)
+        onPreviewChange?.(null)
+        return
+      }
+
+      const player = {
+        username: user.usuario,
+        avatar: user.avatar,
+        title: getTitleFromRole(user.rol),
+      }
+
+      setPreviewPlayer(player)
+      onPreviewChange?.(player)
+    }
+
+    lookup().catch((err) => {
+      console.error(err)
+      setPreviewLoading(false)
+    })
+
+    return () => {
+      active = false
+    }
+  }, [identifier, onPreviewChange])
+
+  const handleIdentifierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIdentifier(e.target.value)
+    setError(null)
   }
 
-  const timer = setTimeout(async () => {
-    const { user, error } = await lookupUser(identifier)
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+    setError(null)
+  }
 
-    if (error) {
-      console.error('❌ Error en búsqueda:', error.message)
-      return
-    }
-
-    if (user) {
-      // ✅ Usuario encontrado: cargar avatar real + rol
-      const player: PlayerData = {
-        username: user.usuario,
-        avatar: user.avatar || FALLBACK_AVATAR,
-        title: ROLE_TITLES[user.rol as keyof typeof ROLE_TITLES] || 'Explorador',
-        id_usuario: user.id_usuario
-      }
-      setPreviewPlayer(player)
-      onPreviewChange(player)
-    } else {
-      // 🚨 Usuario no existe: mostrar fallback NOOB
-      const fallbackPlayer: PlayerData = {
-        username: isValidEmail(identifier) ? identifier.split('@')[0] : identifier,
-        avatar: FALLBACK_AVATAR,
-        title: 'Nuevo Explorador'
-      }
-      setPreviewPlayer(fallbackPlayer)
-      onPreviewChange(fallbackPlayer)
-    }
-  }, 150)
-
-    return () => clearTimeout(timer)
-  }, [identifier, onPreviewChange])
+  const handleRegister = () => {
+    router.push('/index/signup')
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -82,36 +104,27 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
     setError(null)
 
     try {
-      const isEmail = identifier.includes('@')
-      let emailToLogin = identifier
-      
-      if (!isEmail) {
-        const { supabase } = await import('@/lib/supabase')
-        const { data } = await supabase
-          .from('usuarios')
-          .select('email')
-          .eq('usuario', identifier)
-          .maybeSingle()
-        
-        if (!data?.email) throw new Error('Usuario no encontrado en el sistema')
-        emailToLogin = data.email
+      const trimmedIdentifier = identifier.trim()
+      const trimmedPassword = password.trim()
+      if (!trimmedIdentifier || !trimmedPassword) {
+        throw new Error('Completa usuario y contraseña.')
       }
 
-      const { data, error: authError } = await signIn({ email: emailToLogin, password })
-      if (authError || !data) throw authError || new Error('Credenciales incorrectas')
+      const { data, error: authError } = await signInWithIdentifier(trimmedIdentifier, trimmedPassword)
+      if (authError || !data) {
+        throw authError || new Error('Credenciales inválidas, intenta de nuevo.')
+      }
 
-      // ✅ Obtener perfil REAL post-login para actualizar valores de autenticación
-      const { profile } = await getCurrentUser()
-      if (!profile) throw new Error('Perfil no disponible')
+      const player = previewPlayer ?? {
+        username: trimmedIdentifier,
+        avatar: 'https://mystickermania.com/cdn/stickers/games/sticker_3216-512x512.png',
+        title: 'Estudiante Dev',
+      }
 
-      onLoginSuccess({
-        username: profile.usuario,
-        avatar: profile.avatar || FALLBACK_AVATAR, // Datos reales de la BD
-        title: ROLE_TITLES[profile.rol],
-        id_usuario: profile.id_usuario
-      })
+      onLoginSuccess?.(player)
     } catch (err: any) {
-      setError(err.message || 'Error al iniciar sesión')
+      setError(err.message || 'No se pudo iniciar sesión. Revisa tus datos.')
+      console.error('[LoginForm] Error al iniciar sesión:', err)
     } finally {
       setLoading(false)
     }
@@ -119,29 +132,20 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      <Link 
-            href="/" 
-            className={styles.modernLink}
-            onClick={() => setLoading(false)}
-          >
-            <b>↩ Inicio</b>
-          </Link>
       <h1 className={styles.title}>Iniciar Sesión</h1>
       <h2 className={styles.title2}>DevStudy</h2>
+      
       <p className={styles.subtitle}>Prepárate para el siguiente nivel 🎮</p>
-
-      {error && <div className={styles.errorBanner} role="alert">⚠️ {error}</div>}
 
       <div className={styles.fields}>
         <div>
-          <label className={styles.label}>Correo o Usuario</label>
+          <label className={styles.label}>Usuario o correo</label>
           <input
             type="text"
             value={identifier}
-            onChange={(e) => setIdentifier(e.target.value.trim())}
-            placeholder="Ej: astro_dev o correo@escuela.com"
+            onChange={handleIdentifierChange}
+            placeholder="Ej: astro_dev o correo@dominio.com"
             className={styles.input}
-            disabled={loading}
             autoComplete="username"
           />
         </div>
@@ -150,25 +154,28 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             placeholder="••••••••"
             className={styles.input}
-            disabled={loading}
             autoComplete="current-password"
           />
         </div>
       </div>
 
-      <button type="submit" className={`${styles.button} ${loading ? styles.loading : ''}`} disabled={loading || !identifier || !password}>
-        {loading ? '🚀 Conectando...' : 'Iniciar Sesión'}
+      <button type="submit" className={styles.button} disabled={loading}>
+        {loading ? 'Ingresando...' : 'Iniciar Sesión'}
       </button>
-
 
       <div className={styles.footer}>
         ¿No tienes cuenta?{' '}
-        <Link className={styles.link} href="/register">
+        <button
+          type="button"
+          className={styles.link}
+          onClick={handleRegister}
+          disabled={loading}
+        >
           Regístrate
-        </Link>
+        </button>
       </div>
     </form>
   )

@@ -35,11 +35,7 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
 
     if (authError) {
       console.error('[Auth] auth.signUp error:', authError);
-<<<<<<< HEAD
-
-=======
       // ... (tus mensajes de error gamificados se mantienen) ...
->>>>>>> 77b03dc3f088cb20e3363c6b0667a19c89ee9057
       if (authError.message?.includes('already registered')) {
         return { data: null, error: new Error('⚠️ Este correo ya tiene un personaje registrado.') };
       }
@@ -50,23 +46,6 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
       throw new Error('No se pudo crear la cuenta de autenticación.');
     }
 
-<<<<<<< HEAD
-    // ✅ Aquí logueamos el usuario recibido
-    console.log('[Auth] Usuario recibido de Supabase:', 
-      {
-        id: authData.user.id,
-        email: authData.user.email,
-        metadata: authData.user.user_metadata,
-        createdAt: authData.user.created_at
-      });
-
-    console.log('[Auth] ✅ Usuario creado en auth.users:', authData.user.id);
-
-    // 🚫 No insertamos en public.usuarios porque el trigger lo hace automáticamente
-    return { data: authData.user, error: null };
-
-  } catch (error: any) {
-=======
     console.log('[Auth] ✅ Usuario creado en auth.users:', authData.user.id);
 
     // 🎯 2️⃣ ✅ EL TRIGGER SE ENCARGA DE public.usuarios
@@ -94,7 +73,6 @@ export const signUp = async (data: SignUpFormData): Promise<AuthResult<User>> =>
 
   } catch (error: any) {
     // ... (tu manejo de errores se mantiene igual) ...
->>>>>>> 77b03dc3f088cb20e3363c6b0667a19c89ee9057
     console.error('[Auth] ❌ Error crítico en signUp:', error);
     return { data: null, error: error instanceof Error ? error : new Error('Quest fallida. Intenta de nuevo.') };
   }
@@ -122,6 +100,34 @@ export const signIn = async (data: SignInFormData): Promise<AuthResult<Session>>
   } catch (error) {
     console.error('[Auth] Error en signIn:', error);
     return { data: null, error: error as Error };
+  }
+};
+
+export const signInWithIdentifier = async (
+  identifier: string,
+  password: string
+): Promise<AuthResult<Session>> => {
+  try {
+    const normalized = identifier.trim()
+    const isEmail = normalized.includes('@')
+    let email = normalized.toLowerCase()
+
+    if (!isEmail) {
+      const { data: user, error: userError } = await supabase
+        .from('usuarios')
+        .select('email')
+        .ilike('usuario', normalized)
+        .maybeSingle()
+
+      if (userError) throw userError
+      if (!user?.email) throw new Error('Usuario o correo no encontrado.')
+      email = user.email
+    }
+
+    return await signIn({ email, password })
+  } catch (error) {
+    console.error('[Auth] Error en signInWithIdentifier:', error)
+    return { data: null, error: error as Error }
   }
 };
 

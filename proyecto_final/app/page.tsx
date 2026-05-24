@@ -1,9 +1,6 @@
-import { LandingPage } from "./components/LandingPage/LandingPage";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-      <LandingPage>
-
-      </LandingPage>
-  );
+export default function RootPage()
+{
+    redirect("/index");
 }

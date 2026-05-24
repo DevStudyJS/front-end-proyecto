@@ -8,7 +8,7 @@ import { Features } from '../LandingPage/Features/Features';
 import { HowItWorks } from '../LandingPage/HowItWorks/HowItWorks';
 import { Testimonials } from '../LandingPage/Testimonials/Testimonials';
 import { CTA } from '../LandingPage/CTA/CTA';
-import { Footer } from '../Footer/Footer';
+import { Footer } from './Footer/Footer';
 import styles from './LandingPage.module.css';
 
 export const LandingPage = () => {

@@ -57,7 +57,7 @@ export const Navbar = () => {
             <li className={styles.navItem}>
               <div className={styles.authContainer}>
                 <Link 
-                  href="/login" 
+                  href="/index/login" 
                   className={styles.loginButton}
                   aria-label="Iniciar sesión"
                 >
