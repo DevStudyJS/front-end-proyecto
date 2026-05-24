@@ -1,16 +1,13 @@
 import Link from 'next/link'
 import styles from './page.module.css'
 
-interface GameChooserRouteProps {
-  params: {
-    id: string
-    lessonId: string
-  }
-}
-
-export default function GameChooserPage({ params }: GameChooserRouteProps) {
-  const { id, lessonId } = params
-
+export default async function GameChooserPage({ 
+  params 
+}: { 
+  params: Promise<{ id: string; lessonId: string }> 
+}) {
+  const { id, lessonId } = await params
+  const baseRoute = `/index/courses/${id}/lesson/${lessonId}`
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.card}>
@@ -29,10 +26,10 @@ export default function GameChooserPage({ params }: GameChooserRouteProps) {
         </div>
 
         <div className={styles.buttonRow}>
-          <Link href={`/courses/${id}/lesson/${lessonId}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
+          <Link href={`${baseRoute}/juegos/crucigrama`} className={`${styles.button} ${styles.crucigrama}`}>
             Crucigrama
           </Link>
-          <Link href={`/courses/${id}/lesson/${lessonId}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
+          <Link href={`${baseRoute}/juegos/memorama`} className={`${styles.button} ${styles.memorama}`}>
             Memorama
           </Link>
         </div>

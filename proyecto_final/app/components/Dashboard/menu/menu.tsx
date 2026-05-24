@@ -11,10 +11,10 @@ export default function Menu() {
   const [profile, setProfile] = useState<Usuarios | null>(null);
 
   const navItems = [
-    { label: 'Mapa de islas', href: '/index/dashboard' },
+    { label: 'Mapa de islas', href: '/index' },
     { label: 'Mi progreso', href: '/index/scoreboard' },
     { label: 'Ranking global', href: '/index/ranking' },
-    { label: 'Tienda', href: '/index/store' },
+    { label: 'Tienda', href: '/index/tienda' },
     { label: 'Configuración', href: '/index/config' },
   ];
 
@@ -70,13 +70,6 @@ export default function Menu() {
           <div className={styles.userInfoBox}>
             <strong className={styles.userName}>{profile?.usuario || 'Estudiante Dev'}</strong>
             <span className={styles.userSubtitle}>{profile?.usuario ? `Nivel ${profile.racha_dias ?? 0}` : 'Bienvenido'}</span>
-          </div>
-        </div>
-
-        <div className={styles.statGrid}>
-          <div className={styles.statCardSecondary}>
-            <span className={styles.statValue}>{streakLabel}</span>
-            <span className={styles.statLabel}>Racha</span>
           </div>
         </div>
       </div>

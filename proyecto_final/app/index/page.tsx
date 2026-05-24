@@ -1,17 +1,10 @@
-"use client";
+import DashboardShell from '@/app/components/Dashboard/DashboardShell'
+import Mapa from '../components/Dashboard/Mapa/MapaPage'
 
-import { LandingPage } from "../components/LandingPage/LandingPage";
-
-export default function IndexHome()
-{
-    return <LandingPage />
-    /*
-    const isLoggedIn = true;//se conecta con supabase/auth
-
-    if (!isLoggedIn)
-    {
-        return <LoginPage />
-    }
-
-    return <DashboardPage />*/
+export default function DashboardPage() {
+  return (
+    <DashboardShell>
+      <Mapa />
+    </DashboardShell>
+  )
 }

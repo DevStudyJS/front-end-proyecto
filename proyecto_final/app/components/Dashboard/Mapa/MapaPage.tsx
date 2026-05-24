@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useParams } from 'next/navigation'
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import styles from "./mapa.module.css";
@@ -13,6 +14,7 @@ const visualesIsla: Record<number, { img: string; bloqueado: boolean }> = {
 };
 
 export default function Mapa() {
+  const params = useParams()
   const [cursos, setCursos] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -73,7 +75,7 @@ export default function Mapa() {
           return (
             <Link
               key={curso.course_id}
-              href={`/courses/${curso.course_id}`}
+              href={`/index/courses/${curso.course_id}`}
               style={{ textDecoration: "none" }}
             >
               {tarjetaContenido}
