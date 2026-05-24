@@ -95,7 +95,7 @@ export default function LoginForm({ onPreviewChange, onLoginSuccess }: Props) {
   }
 
   const handleRegister = () => {
-    router.push('/index/signup')
+    router.push('/signup')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

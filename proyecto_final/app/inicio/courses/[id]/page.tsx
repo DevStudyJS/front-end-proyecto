@@ -8,7 +8,7 @@ interface CourseSelectionPageProps {
 export default async function CourseSelectionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   //console.log('📍 ID del curso actual:', id)
-  const baseRoute = `/index/courses/${id}`
+  const baseRoute = `/inicio/courses/${id}`
 
   return (
     <div className={styles.pageWrapper}>

@@ -91,7 +91,7 @@ export default function SignupForm() {
 
       console.log('✅ Registro exitoso:', data)
       setSuccess(true)
-      setTimeout(() => router.push('/index/login?registered=true'), 2500)
+      setTimeout(() => router.push('/login'), 2500)
       
     } catch (err: any) {
       console.error('❌ Error en signUp:', {
@@ -236,7 +236,7 @@ export default function SignupForm() {
           ¿Ya tienes cuenta?{' '}
           <button 
             className={styles.link} 
-            onClick={() => router.push('/index/login')}
+            onClick={() => router.push('/login')}
             disabled={loading}
           >
             ENTRAR

@@ -117,10 +117,10 @@ export default function AccountPage() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          <Link href="/index" className={styles.sidebarLink}>
+          <Link href="/inicio" className={styles.sidebarLink}>
             Islas
           </Link>
-          <Link href="/index/config" className={`${styles.sidebarLink} ${styles.activeLink}`}>
+          <Link href="/inicio/config" className={`${styles.sidebarLink} ${styles.activeLink}`}>
             Cuenta
           </Link>
           <button

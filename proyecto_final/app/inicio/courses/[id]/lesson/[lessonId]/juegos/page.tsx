@@ -7,7 +7,7 @@ export default async function GameChooserPage({
   params: Promise<{ id: string; lessonId: string }> 
 }) {
   const { id, lessonId } = await params
-  const baseRoute = `/index/courses/${id}/lesson/${lessonId}`
+  const baseRoute = `/inicio/courses/${id}/lesson/${lessonId}`
 
   return (
     <div className={styles.pageWrapper}>

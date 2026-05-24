@@ -75,7 +75,7 @@ export default function Mapa() {
           return (
             <Link
               key={curso.course_id}
-              href={`/index/courses/${curso.course_id}`}
+              href={`/inicio/courses/${curso.course_id}`}
               style={{ textDecoration: "none" }}
             >
               {tarjetaContenido}

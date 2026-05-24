@@ -11,19 +11,19 @@ export default function Menu() {
   const [profile, setProfile] = useState<Usuarios | null>(null);
 
   const navItems = [
-    { label: 'Mapa de islas', href: '/index' },
-    { label: 'Mi progreso', href: '/index/scoreboard' },
-    { label: 'Ranking global', href: '/index/ranking' },
-    { label: 'Tienda', href: '/index/tienda' },
-    { label: 'Configuración', href: '/index/config' },
+    { label: 'Mapa de islas', href: '/inicio' },
+    { label: 'Mi progreso', href: '/inicio/scoreboard' },
+    { label: 'Ranking global', href: '/inicio/ranking' },
+    { label: 'Tienda', href: '/inicio/tienda' },
+    { label: 'Configuración', href: '/inicio/config' },
   ];
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   const getItemClass = (href: string) => {
     let className = styles.navItem;
-    if (href === '/index/scoreboard') className = `${styles.navItem} ${styles.scoreItem}`;
-    if (href === '/index/ranking') className = `${styles.navItem} ${styles.rankingItem}`;
+    if (href === '/inicio/scoreboard') className = `${styles.navItem} ${styles.scoreItem}`;
+    if (href === '/inicio/ranking') className = `${styles.navItem} ${styles.rankingItem}`;
     if (isActive(href)) className = `${className} ${styles.active}`;
     return className;
   };

@@ -7,7 +7,7 @@ export default async function LessonRoute({
   params: Promise<{ id: string; lessonId: string }> 
 }) {
   const { id, lessonId } = await params
-  const baseRoute = `/index/courses/${id}`
+  const baseRoute = `/inicio/courses/${id}`
 
   return (
     <div className={styles.pageWrapper}>
