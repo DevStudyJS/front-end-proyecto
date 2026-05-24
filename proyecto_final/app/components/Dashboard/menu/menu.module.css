@@ -1,0 +1,233 @@
+:global(body) {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #eef4ff;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  box-shadow: 2px 0 20px rgba(15, 23, 42, 0.08);
+  padding: 30px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 35vh;
+  overflow-y: auto;
+  padding-right: 4px;
+  scroll-behavior: smooth;
+}
+
+.menuTop {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #c7d2fe;
+  color: #1e3a8a;
+  font-size: 1rem;
+  box-shadow: 0 12px 25px rgba(59, 130, 246, 0.18);
+}
+
+.logoText {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  letter-spacing: 0.02em;
+}
+
+.menuHeader {
+  margin: 0;
+}
+
+.brandBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.menuTitle {
+  margin: 18px 0 6px;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.menuSubtitle {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f8fbff;
+  border: 1px solid #e0e7ff;
+  border-radius: 22px;
+}
+
+.userAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid #c7d2fe;
+}
+
+.userInfoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userName {
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.userSubtitle {
+  color: #475569;
+  font-size: 0.92rem;
+}
+
+.statGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.statCard,
+.statCardSecondary {
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #c7d2fe;
+}
+
+.statCardSecondary {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  border: 1px solid #fb923c;
+}
+
+.statCardSecondary .statValue,
+.statCardSecondary .statLabel {
+  color: #ffffff;
+}
+
+.statValue {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.navList {
+  display: grid;
+  gap: 12px;
+}
+
+.navItem {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 18px;
+  color: #334155;
+  background: #f8fafc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.navItem:hover {
+  background: #eef2ff;
+  transform: translateX(2px);
+}
+
+.scoreItem {
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  color: #ffffff;
+}
+
+.rankingItem {
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  color: #ffffff;
+}
+
+.active {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  color: #ffffff;
+}
+
+.pointsBox {
+  margin-top: 32px;
+  background: #eff6ff;
+  border-radius: 18px;
+  padding: 18px 16px;
+  border: 1px solid #dbeafe;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pointsLabel {
+  display: block;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.pointsValue {
+  display: block;
+  font-size: 2rem;
+  color: #1d4ed8;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .menu {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}

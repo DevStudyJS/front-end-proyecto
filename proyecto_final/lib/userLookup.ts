@@ -1,10 +1,10 @@
 // 📁 lib/userLookup.ts
-import { supabase } from './supabase'
+import { createClient } from '@/lib/supabase/client' 
 import type { Usuarios } from './database.types'
 
 // ✅ Solo columnas seguras para exponer en login/preview (RNF 5)
 export type PublicUserProfile = Pick<Usuarios, 'id_usuario' | 'usuario' | 'avatar' | 'rol'>
-
+const supabase = createClient();
 /**
  * Valida si un string tiene formato de correo electrónico estándar
  */

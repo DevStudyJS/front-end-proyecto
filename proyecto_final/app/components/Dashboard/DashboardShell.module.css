@@ -1,0 +1,24 @@
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+  background: #e3eeff;
+}
+
+.mainContent {
+  flex: 1;
+  margin-left: 260px;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fbff 0%, #e3eeff 100%);
+}
+
+@media (max-width: 900px) {
+  .dashboardLayout {
+    flex-direction: column;
+  }
+
+  .mainContent {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+}
